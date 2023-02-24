@@ -451,6 +451,27 @@ Class Action {
 			return 1;
 	}
 
+	function save_office(){
+		extract($_POST);
+		$data =" name='$name' ";
+
+		if(empty($id)){
+			$save = $this->db->query("INSERT INTO office set ".$data);
+		}else{
+			$save = $this->db->query("UPDATE office set ".$data." where id=".$id);
+		}
+		if($save)
+			return 1;
+	}
+
+	function delete_office(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM office where id = ".$id);
+		if($delete)
+			return 1;
+	}
+
+
 	function save_department(){
 		extract($_POST);
 		$data =" name='$name' ";

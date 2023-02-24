@@ -9,8 +9,12 @@
   include ('topbar.php'); 
   include ('navbar.php'); 
   include ('utils.php');
+
 ?>
 
+<head>
+  <link rel="stylesheet" href="css/datatable-styles.css"/> 
+</head>   
 <main id="view-panel" >
 
 <div class="container-fluid" >
@@ -20,11 +24,12 @@
         <br />
         <div class="card flex-fill">
           <div class="card-header">
-            <h5 class="card-title mb-0">Assigned Assets</h5>
-            <button class="btn btn-primary btn-sm btn-block col-md-3 float-right" type="button" id="new_asset_assign"><span class="fa fa-plus"></span> New Asset Assignment</button>
-          </div>
-          <div class="card-body">
-            <table id="table" class="table table-hover">
+
+                  <h5 class="card-title mb-0">Assigned Assets</h5>
+                  <button class="btn btn-primary btn-sm btn-block col-md-3 float-right" type="button" id="new_asset_assign"><span class="fa fa-plus"></span> New Asset Assignment</button>
+               </div>
+       <div class="card-body">
+           <table id="table" class="table table-hover">
                 <thead>
                   <tr>
                     <th>PAR No.</th>
@@ -69,10 +74,19 @@
             
             <td>
               <center>
-                    
-                     <button class="btn btn-sm btn-outline-primary view_assign" title="View" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button>
+ 
+                    <button class="btn btn-sm btn-outline-primary view_assign" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button>
+                    <button class="btn btn-sm btn-outline-primary edit_assign" data-id="<?php echo $row['assignnumber']?>" type="button"><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-sm btn-outline-danger remove_assign" data-id="<?php echo $row['assignnumber']?>" type="button"><i class="fa fa-trash"></i></button>
+ 
+
+
+
+ <!--                    <button class="btn btn-sm btn-outline-primary view_assign" title="View" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button>
                      <button class="btn btn-sm btn-outline-secondary edit_assign" title="Edit" data-id="<?php echo $row['assignnumber']?>" type="button"><i class="fa fa-edit"></i></button>
-                     <button class="btn btn-sm btn-outline-success print_mr" title="Print MR" data-id="<?php echo $row['assignnumber']?>" type="button"><i class="fa fa-print"></i></button>
+                     <button class="btn btn-sm btn-outline-success print_mr " title="Print MR" data-id="<?php echo $row['assignnumber']?>" type="button"><i class="fa fa-print"></i></button>
+
+                     --->
                      <!-- <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split btn-outline-success " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-print"></i>&nbsp;&nbsp;</button>
                       <span class="sr-only">Toggle Dropdown</span>
                     

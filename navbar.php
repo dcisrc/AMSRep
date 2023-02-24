@@ -86,6 +86,9 @@ button.nav-item:hover, .nav-item.active {
     <a class="nav-link nav-item" href="department.php"><span class='icon-field'><i class="fa fa-building"></i></span> Departments</a>
   </li>
   <li class="nav-item">
+    <a class="nav-link nav-item" href="office.php"><span class='icon-field'><i class="fa fa-building"></i></span> Offices</a>
+  </li>
+  <li class="nav-item">
     <a class="nav-link nav-item" href="category.php"><span class='icon-field'><i class="fa fa-object-group"></i></span> Asset Categories </a>
   </li>
   <li class="nav-item">
