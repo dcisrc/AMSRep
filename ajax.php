@@ -134,6 +134,19 @@ if($action == "save_inventory"){
 	$save = $crud->save_inventory();
 	if($save)
 		echo $save;
+}	
+
+if($action == "save_supplies"){
+	$save = $crud->save_supplies();
+	if($save)
+		echo $save;
+
+}
+if($action == "delete_supplies"){
+	$save = $crud->delete_supplies();
+	if($save)
+		echo $save;	
+
 }
 if($action == "delete_inventory"){
 	$save = $crud->delete_inventory();
@@ -157,6 +170,22 @@ if($action == "save_inventory_details"){
 		echo $save;
 }
 
+if($action == "save_office"){
+	$save = $crud->save_office();
+	if($save)
+		$_SESSION['user_action'] = "Saved Office";
+		$savelogs = $crud->save_logs();
+		if($savelogs)
+		echo $save;
+}
+
+if($action == "delete_office"){
+	$save = $crud->delete_office();
+	if($save)
+		echo $save;
+}	
+
+
 if($action == "save_department"){
 	$save = $crud->save_department();
 	if($save)
@@ -165,6 +194,7 @@ if($action == "save_department"){
 		if($savelogs)
 		echo $save;
 }
+
 if($action == "delete_department"){
 	$save = $crud->delete_department();
 	if($save)

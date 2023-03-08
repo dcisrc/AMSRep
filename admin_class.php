@@ -326,6 +326,28 @@ Class Action {
 			return 1;
 	}
 
+	function save_supplies(){
+		extract($_POST);
+		$data =" item_code = '$item_code' ";
+		$data .=", item_description = '$item_description' ";
+		$data .=", item_type = '$item_type'";
+		$data .=", unit_of_measure = '$unit_of_measure'";
+		$data .=", pcs_unit = '$pcs_unit'";
+		if(empty($id)){
+			$save = $this->db->query("INSERT INTO supplies_master set ".$data);
+		}else{
+			$save = $this->db->query("UPDATE supplies_master set ".$data." where id=".$id);
+		}
+		if($save)
+			return 1;
+	}
+
+	function delete_supplies(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM supplies_master where id = ".$id);
+		if($delete)
+			return 1;
+	}
 
 	function save_inventory(){
 		extract($_POST);
