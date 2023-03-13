@@ -30,14 +30,15 @@
         <div class="card flex-fill">
           <div class="card-header">
             <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-10">
               <h5 class="card-title mb-0">Supplies List</h5>
             
             </div>
-            <div class="col-md-2" >
+            <!-- <div class="col-md-2" >
             <button class="btn btn-primary btn-sm btn-block float-right" type="button" id="upload_supplies_btn"><span class="fa fa-upload"></span> Upload </button>
             </div>
-            
+ -->
+                    
             <div class="col-md-2" >
             <button class="btn btn-primary btn-sm btn-block  float-right" type="button" id="new_supplies_btn"><span class="fa fa-plus"></span> Add Supplies</button>
             </div>
@@ -99,7 +100,7 @@
             <td class="d-none d-xl-table-cell"><?php echo $row['pcs_unit'] ?></td>
             <td>
               <center>
-                     <button class="btn btn-sm btn-outline-primary view_supplies" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye" title= "View Suupplies"></i></button>
+                     <button class="btn btn-sm btn-outline-primary view_supplies" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye" title= "View Supplies"></i></button>
                      <button class="btn btn-sm btn-outline-primary edit_supplies" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-edit" title= "Edit Supplies"></i></button>
                      <button class="btn btn-sm btn-outline-danger remove_supplies" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-trash" title= "Delete Supplies"></i></button>
               </center> 
