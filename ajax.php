@@ -148,6 +148,12 @@ if($action == "delete_supplies"){
 		echo $save;	
 
 }
+if($action == "add_item_delivery"){
+	$save = $crud->add_item_delivery();
+	if($save)
+		echo $save;	
+
+}
 if($action == "delete_inventory"){
 	$save = $crud->delete_inventory();
 	if($save)

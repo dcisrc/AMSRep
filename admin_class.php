@@ -349,6 +349,22 @@ Class Action {
 			return 1;
 	}
 
+	function add_item_delivery(){
+		extract($_POST);
+		$data = " item_id='$item_id',";
+ 		$data .= " ref_no='$po_number', ";
+ 		$data .= " tran_date='$tran_date',";
+ 		$data .= " tran_code = 'DEL' ,";
+ 		$data .= " dep = '$qty' ,";
+ 		$data .= " purchase_price = '$price'";
+ 		
+ 	
+		
+		$save = $this->db->query("INSERT INTO supplies_txn set ".$data);
+		if($save)
+			return 1;
+	}
+
 	function save_inventory(){
 		extract($_POST);
 		$data =" inv_date='$inv_date' ";

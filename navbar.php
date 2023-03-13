@@ -9,7 +9,7 @@ button.nav-item {
     background-color: #000000c4;
     color: #989898;
     font-weight: 300;
-    width: 260px;
+    width: 250px;
     text-align: left;
   
 
@@ -21,7 +21,7 @@ button.nav-item:hover, .nav-item.active {
     }
 .fa-caret-down {
   float: right;
-  padding-right: 1px;
+  padding-right: 8px;
   color: white;
 }
 .dropdown-container {
@@ -58,13 +58,12 @@ button.nav-item:hover, .nav-item.active {
 
 ?>
 <nav class="sidebar card py-2 mb-4 mx-lt-5 bg-dark" id="sidebar">
+  
 <div class="sidebar-list">
+<ul class="nav flex-column" id="nav_accordion">
   <li class="nav-item">
     <a class="nav-link nav-item" href="home.php"><span class='icon-field'><i class="fa fa-home"></i></span> Home </a>
   </li>
- <li class="nav-item has-submenu">
-    <a class="nav-link nav-item" href="#"><span class='icon-field'><i class="fa fa-chart-bar"></i></span> Assets <i class="fa fa-caret-down"></i></a>
- <ul class="submenu collapse">
   <li class="nav-item">
     <a class="nav-link nav-item" href="assetsmasterlist.php"><span class='icon-field'><i class="fa fa-keyboard"></i></span> Asset Masterlist </a>
   </li>
@@ -80,10 +79,13 @@ button.nav-item:hover, .nav-item.active {
   <li class="nav-item">
     <a class="nav-link nav-item" href="assettransfers.php"><span class='icon-field'><i class="fa fa-luggage-cart"></i></span> Asset Transfer/Return </a>
   </li>
- </ul>
   <li class="nav-item">
-    <a class="nav-link nav-item" href="suppliesmasterlist.php"><span class='icon-field'><i class="fa fa-store"></i></span> Supplies Masterlist </a>
+    <a class="nav-link nav-item" href="suppliesmasterlist.php"><span class='icon-field'><i class="fa fa-keyboard"></i></span> Supplies Masterlist </a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link nav-item" href="suppliesdelivery.php"><span class='icon-field'><i class="fa fa-keyboard"></i></span> Supplies Delivery </a>
+  </li>
+
   <li class="nav-item">
     <a class="nav-link nav-item" href="employee.php"><span class='icon-field'><i class="fa fa-user-circle"></i></span> Employees</a>
   </li>
@@ -129,6 +131,8 @@ button.nav-item:hover, .nav-item.active {
   <li class="nav-item">
     <a class="nav-link nav-item" href="users.php"><span class='icon-field'><i class="fa fa-user"></i></span> User Maintenance </a>
   </li>
+
+
 </ul>
 </div>
 </nav>
