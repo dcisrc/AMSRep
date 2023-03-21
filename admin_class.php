@@ -16,17 +16,12 @@ Class Action {
 	}
 
 	function login(){
-		
 		extract($_POST);
-
 		//For added security - avoid brute force
 		$username = stripslashes($username);
 		$password = stripslashes($password);
-		
 		$username = str_replace("'", '', $username);
 		$password = str_replace("'", '', $password);
-     
-
 		$qry = $this->db->query("SELECT * FROM users where username = '".$username."'");  // and password = '".$password."'");
 		if($qry->num_rows > 0){
 			foreach ($row=$qry->fetch_array() as $key => $value) {
@@ -34,8 +29,6 @@ Class Action {
 					$_SESSION['login_'.$key] = $value;
             	    $hash = $row['password'];
 					}
-
-
 					if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
     					$ip = $_SERVER['HTTP_CLIENT_IP'];
 					} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -43,24 +36,18 @@ Class Action {
 					} else {
     					$ip = $_SERVER['REMOTE_ADDR'];
 					}
-			 
 			        $_SESSION['ip'] = $ip;
 			        sleep(3);
 			if (password_verify($password,$hash) ){
-				       		
 				return 1;
             }
-           
 		}
-
-			
 		else{
-			
 			return 3;
 		}
 	}
-	function login2(){
 
+	function login2(){
 		extract($_POST);
 		$qry = $this->db->query("SELECT * FROM users where username = '".$email."' and password = '".md5($password)."' ");
 		if($qry->num_rows > 0){
@@ -75,6 +62,7 @@ Class Action {
 			return 3;
 		}
 	}
+
 	function logout(){
 		session_destroy();
 		foreach ($_SESSION as $key => $value) {
@@ -82,6 +70,7 @@ Class Action {
 		}
 		header("location:login.php");
 	}
+
 	function logout2(){
 		session_destroy();
 		foreach ($_SESSION as $key => $value) {
@@ -108,10 +97,10 @@ Class Action {
 			return 1;
 		}
 	}
+
 	function save_role(){
 		extract($_POST);
 		$data =" role_name='$role_name' ";
-
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO roles set ".$data);
 		}else{
@@ -120,6 +109,7 @@ Class Action {
 		if($save)
 			return 1;
 	}
+
 	function delete_role(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM roles where role_id = ".$role_id);
@@ -160,6 +150,7 @@ Class Action {
 			return 1;
 		}
 	}
+
 	function changepassword(){
 		extract($_POST);
         if ($newpassword <> $verifypassword)
@@ -188,9 +179,7 @@ Class Action {
 		$data .= ", module = '$module' ";
 		$data .= ", access_date = '".$date. "'";
 		$data .= ", mac = '". $_SESSION['ip']."'";
-		
 			$save = $this->db->query("INSERT INTO activitylogs set ".$data);
-		
 		if($save){
 			return 1;
 		}
@@ -206,9 +195,7 @@ Class Action {
 						$fname = strtotime(date('y-m-d H:i')).'_'.$_FILES['img']['name'];
 						$move = move_uploaded_file($_FILES['img']['tmp_name'],'assets/img/'. $fname);
 					$data .= ", logo = '$fname' ";
-
 		}
-		
 		// echo "INSERT INTO system_settings set ".$data;
 		$chk = $this->db->query("SELECT * FROM system_settings");
 		if($chk->num_rows > 0){
@@ -222,7 +209,6 @@ Class Action {
 			if(!is_numeric($key))
 				$_SESSION['setting_'.$key] = $value;
 		}
-
 			return 1;
 				}
 	}
@@ -235,8 +221,6 @@ Class Action {
 		//$data .=", position_id='$position_id' ";
 		$data .=", department_id='$department_id' ";
 		//$data .=", salary='$salary' ";
-		
-
 		if(empty($id)){
 			$i= 1;
 			while($i == 1){
@@ -255,6 +239,7 @@ Class Action {
 		if($save)
 			return 1;
 	}
+
 	function delete_employee(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM employee where id = ".$id);
@@ -266,8 +251,6 @@ Class Action {
 		extract($_POST);
 		$data =" name='$name' ";
 		$data .=", pnsuffix = '$pnsuffix' ";
-		
-
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO assetitem set ".$data);
 		}else{
@@ -283,7 +266,6 @@ Class Action {
 		if($delete)
 			return 1;
 	}
-
 
 	function save_asset(){
 		extract($_POST);
@@ -307,8 +289,6 @@ Class Action {
 		$data .=", totaldepreciation='$totaldepreciation'";
 		$data .=", netbookvalue = '$netbookvalue'";
 		$data .=", `condition` = '$condition'";
-		
-
 		if(empty($id)){
 			$data .=", status = 'Unassigned'";
 			$save = $this->db->query("INSERT INTO assets set ".$data);
@@ -319,6 +299,7 @@ Class Action {
 		if($save)
 			return 1;
 	}
+
 	function delete_asset(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM assets where id = ".$id);
@@ -357,9 +338,6 @@ Class Action {
  		$data .= " tran_code = 'DEL' ,";
  		$data .= " dep = '$qty' ,";
  		$data .= " purchase_price = '$price'";
- 		
- 	
-		
 		$save = $this->db->query("INSERT INTO supplies_txn set ".$data);
 		if($save)
 			return 1;
@@ -371,8 +349,6 @@ Class Action {
 		$data .=", description = '$description' ";
 		$data .=", employee_id = ". $_SESSION['login_id'];
 		$data .=", rpt_status = 'Open'";
-		
-
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO inventory set ".$data);
 		}else{
@@ -381,60 +357,55 @@ Class Action {
 		if($save)
 			return 1;
 	}
+
 	function delete_inventory(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM inventory where id = ".$id);
 		if($delete)
 			return 1;
 	}
+
 	function close_inventory(){
 		extract($_POST);
 		$save = $this->db->query("UPDATE inventory set rpt_status='Closed' WHERE id=".$id);
-		
 		if($save)
 			return 1;
 	}
+
 	function check_inventory_details(){
 		extract($_POST);
 		$data = " inv_id = '$id' ";
 		$data .= "and asset_code = '$asset_number' ";
-		
-	
 		$check = $this->db->query("SELECT * FROM inventorydetails WHERE ".$data);
 		if($check ->num_rows > 0){
 			return 0;
 		}
-		
 		else{
 			return 1;
 		}
 
 	}	
+
 	function save_inventory_details(){
 		extract($_POST);
 		$data = " inv_id = '$id' ";
 		$data .= "and asset_code = '$asset_number' ";
-
 		$check = $this->db->query("SELECT * FROM inventorydetails WHERE ".$data);
 		if($check->num_rows > 0)
 			return 2;
-			
-		
 		else
 		 	$data = " inv_id = '$id' ";
 			$data .= ", asset_code = '$asset_number' ";
 			$data .=", asset_status = '$asset_status' ";
 			$data .=", remarks = '$remarks'";
-	
 			$save = $this->db->query("INSERT INTO inventorydetails set ".$data);
 			if($save)
 				return 1;
-
 	}
+
 	function save_category(){
 		extract($_POST);
 		$data =" name='$name' ";
-
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO category set ".$data);
 		}else{
@@ -443,6 +414,7 @@ Class Action {
 		if($save)
 			return 1;
 	}
+
 	function delete_category(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM category where id = ".$id);
@@ -450,11 +422,9 @@ Class Action {
 			return 1;
 	}
 
-
 	function save_fundcluster(){
 		extract($_POST);
 		$data =" name='$name' ";
-
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO fund_cluster set ".$data);
 		}else{
@@ -463,6 +433,7 @@ Class Action {
 		if($save)
 			return 1;
 	}
+
 	function delete_fundcluster(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM fund_cluster where id = ".$id);
@@ -473,7 +444,6 @@ Class Action {
 	function save_location(){
 		extract($_POST);
 		$data =" name='$name' ";
-
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO location set ".$data);
 		}else{
@@ -482,6 +452,7 @@ Class Action {
 		if($save)
 			return 1;
 	}
+
 	function delete_location(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM location where id = ".$id);
@@ -492,7 +463,6 @@ Class Action {
 	function save_office(){
 		extract($_POST);
 		$data =" name='$name' ";
-
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO office set ".$data);
 		}else{
@@ -509,11 +479,9 @@ Class Action {
 			return 1;
 	}
 
-
 	function save_department(){
 		extract($_POST);
 		$data =" name='$name' ";
-
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO department set ".$data);
 		}else{
@@ -522,6 +490,7 @@ Class Action {
 		if($save)
 			return 1;
 	}
+
 	function delete_department(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM department where id = ".$id);
@@ -533,8 +502,6 @@ Class Action {
 		extract($_POST);
 		$data =" name='$name' ";
 		$data .=", position_id = '$position_id' ";
-		
-
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO position set ".$data);
 		}else{
@@ -543,12 +510,14 @@ Class Action {
 		if($save)
 			return 1;
 	}
+
 	function delete_position(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM position where id = ".$id);
 		if($delete)
 			return 1;
 	}
+
 	function add_asset_assignment(){
 		extract($_POST);
 		$data = " assignnumber='$assign_number',";
@@ -557,14 +526,11 @@ Class Action {
  		$data .= " assetcode = '$asset_code' ,";
  		$data .= " assign_mode = 'Purchase' ,";
  		$data .= " assign_status = 'Active' ";
- 	
-		
 		$save = $this->db->query("INSERT INTO assetassignment set ".$data);
 		//$save = $this->db->query("UPDATE assets set status='ASSIGNED'," . $data1);
 		if($save)
 			return 1;
 	}
-
 
 	function update_unassigned_assets(){
 		extract($_POST);
@@ -572,8 +538,6 @@ Class Action {
  		$data .= " mr_date='$assign_date', ";
 		$data .= " assetassignee = '$assignee_id' where ";
 		$data .= " asset_code = '$asset_code' ";
-		
-
 		$save = $this->db->query("UPDATE assets set status = 'Assigned', ".$data);
         if($save)
            return 1; 
@@ -581,11 +545,8 @@ Class Action {
 
 	function remove_asset_assignment(){
 		extract($_POST);
-		
  		$data = " assetcode = '$asset_code' ";
  		$data .= "and  mr_number = '$mr_number'  ";
-		
-		
 		$save = $this->db->query("DELETE FROM assetassignment WHERE ".$data);
 		//$save = $this->db->query("UPDATE assets set status='ASSIGNED'," . $data1);
 		if($save)
@@ -601,24 +562,19 @@ Class Action {
  		$data .= " assetcode = '$asset_code' ,";
  		$data .= " assign_status = 'Active' ,";
  		$data .= " assign_mode =  'Transfer' ";
- 		
 		$save = $this->db->query("INSERT INTO assetassignment set ".$data);
-		
 		if($save)
 			return 1;
 	}
 
 	function update_prevassigned_assets(){
 		extract($_POST);
-		
 		$data = " where assignnumber ='$par_number' and assetcode = '$asset_code' ";
-
 		$save = $this->db->query("UPDATE assetassignment set assign_status = 'Inactive' ".$data);
         if($save)
            return 1; 
 	}
 	
-
 	function save_permission(){
 		extract($_POST);
 		$data =" role_id = '$mrole_id' ";
@@ -635,5 +591,19 @@ Class Action {
 		if($save)
 			return 1;
 	}
-    
+
+    function add_item_issuance(){
+		extract($_POST);
+		$data = " item_id='$item_id',";
+ 		$data .= " ref_no='$cr_number', ";
+ 		$data .= " tran_date='$tran_date',";
+ 		$data .= " tran_code = 'WDW' ,";
+ 		$data .= " wdw = '$qty' ,";
+ 		$data .= " purchase_price = '$price' ,";
+		$data .= " dep_id = '$department'";
+		$save = $this->db->query("INSERT INTO supplies_txn set ".$data);
+		if($save)
+			return 1;
+	}
+
 }

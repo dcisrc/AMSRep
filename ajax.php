@@ -22,7 +22,6 @@ if($action == 'login'){
 		echo $login;
 	}
 
-
 }
 if($action == 'login2'){
 	$login = $crud->login2();
@@ -150,6 +149,12 @@ if($action == "delete_supplies"){
 }
 if($action == "add_item_delivery"){
 	$save = $crud->add_item_delivery();
+	if($save)
+		echo $save;	
+
+}
+if($action == "add_item_issuance"){
+	$save = $crud->add_item_issuance();
 	if($save)
 		echo $save;	
 

@@ -176,7 +176,7 @@ INSERT INTO `condition` (`name`) VALUES
 CREATE TABLE `assetitem` (
 `id` int(30) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `name` text NOT NULL,
-`pnsuffix` text(2) NOT NULL
+'pnsuffix` text(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
