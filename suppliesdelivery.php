@@ -100,7 +100,7 @@
 
                 <thead class="bg-primary">
                   <tr>
-                    
+                    <th>Item ID </th>
                     <th>Item Code</th>
                     <th>Item Description</th>
                     <th>Unit of Measure</th>
@@ -111,7 +111,7 @@
                 </thead>
                 <tfoot>
                   <tr>
-                    
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -233,65 +233,57 @@
         var po_number = document.getElementById('po_number').value;
         var tran_date = document.getElementById('tran_date').value;
         //var item_id = document.getElementById('item_id').value;
-        console.log(po_number);
+
+        
         $('#items_delivered').find('tr').each(function (i, el) {
-            var $tds = $(this).find('td');
-            var item_id = String($tds.eq(0).text());
-            var qty = parseFloat($tds.eq(3).text());
-            var price = parseFloat($tds.eq(4).text());
-              console.log(item_id);   
-              if (item_id != 'Item Code' && item_id != '' )
-              {
-                            
-                //start_load()
-                $.ajax({
-                    type: "POST",
-                    url: "ajax.php?action=add_item_delivery",
-                    data: {
-                        po_number:po_number,
-                        tran_date:tran_date, 
-                        item_id:item_id,
-                        qty:qty,
-                        price:price
-                    },
-                    success: function(resp) {
-                      if(resp == 1){
+          var $tds = $(this).find('td');
+          var item_id = String($tds.eq(0).text());
+          var qty = parseFloat($tds.eq(4).text());
+          var price = parseFloat($tds.eq(5).text());
+               
+          if (item_id != 'Item ID' && item_id != '' )
+          {
+            //console.log(price);         
+            //start_load()
+            $.ajax({
+              type: "POST",
+              url: "ajax.php?action=add_item_delivery",
+              data: {
+                  po_number:po_number,
+                  tran_date:tran_date, 
+                  item_id:item_id,
+                  qty:qty,
+                  price:price
+              },
+              success: function(resp) {
+                if(resp == 1){
+                  alert_toast("Deliveries successfully saved","success");
+                  setTimeout(function(){
+                    //location.reload();
+                    location.href="suppliesdelivery.php";
+                  },1000)
+        
+                }
                         
-                         
-                               
-                               alert_toast("Deliveries successfully saved","success");
-                               setTimeout(function(){
-                               //location.reload();
-                               location.href="suppliesdelivery.php";
-
-                               },1000)
-                            
-                       
-                       
-                      }
-                        
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr);
-                        //alert_toast(error);
-                        setTimeout(function(){
-                              location.reload();
-
-                               },1000)
-                    }
-                });
-
+              },
+              error: function(xhr, status, error) {
+                console.error(xhr);
+                //alert_toast(error);
+                setTimeout(function(){
+                  location.reload();
+                },1000)
 
               }
+            });
+
+
+          }
             
     
-        });
-
       });
+
+    });
    
-    
-
-
 
     
 

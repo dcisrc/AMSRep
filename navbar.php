@@ -85,6 +85,9 @@ button.nav-item:hover, .nav-item.active {
   <li class="nav-item">
     <a class="nav-link nav-item" href="suppliesdelivery.php"><span class='icon-field'><i class="fa fa-keyboard"></i></span> Supplies Delivery </a>
   </li>
+   <li class="nav-item">
+    <a class="nav-link nav-item" href="suppliesissuance.php"><span class='icon-field'><i class="fa fa-keyboard"></i></span> Supplies Issuance </a>
+  </li>
 
   <li class="nav-item">
     <a class="nav-link nav-item" href="employee.php"><span class='icon-field'><i class="fa fa-user-circle"></i></span> Employees</a>

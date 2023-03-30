@@ -59,13 +59,13 @@
               </div>
               <div class="form-group col-md-4" style="padding-left:30px">
                 <label>Item</label>
-                <select class="custom-select browser-default " name="item_code" id="item_code" onchange="ichange()">
+                <select class="custom-select browser-default " name="item_id" id="item_id" onchange="ichange()">
                   <option value=""></option>
                   <?php
                     $item = $conn->query("SELECT * from supplies_master order by item_description asc");
                       while($row=$item->fetch_assoc()):
                   ?>
-                  <option value="<?php echo $row['item_code'] ?>" <?php echo isset($item_id) && $item_id == $row['id'] ? "selected" :"" ?>><?php echo $row['item_description'] ?></option> 
+                  <option value="<?php echo $row['id'] ?>" <?php echo isset($item_id) && $item_id == $row['id'] ? "selected" :"" ?>><?php echo $row['item_description'] ?></option> 
                       <?php endwhile; ?>
                 </select>
               </div>
@@ -73,17 +73,17 @@
               <div class="form-group col-md-2" style="padding-left:30px">
                  <label> Available Stock </label>
                  <div></div> 
-                 <p name="stock" id="stock">0</p>
-              </div>
-
+                 <input type="text" name="stock" id="stock"  disabled class="form-control text-right" value='-'/>
+              </div> 
+ 
               <div class="form-group col-md-2" style="padding-right:30px">
                 <label>Qty.</label>
                 <input type="number" name="quantity" id="quantity" required="required" class="form-control text-left" value="0"/>'
               </div>
-              <div class="form-group col-md-2" style="padding-left:30px">
+              <!-- <div class="form-group col-md-2" style="padding-left:30px">
                 <label>Price</label>
                 <input type="number" name="price" id="price" required="required" class="form-control text-left" value="0.00" />'
-              </div>
+              </div> -->
               <div class="form-group col-md-2">
                 <br>
                 <button class="btn btn-secondary btn-sm btn-block col-md-6 float-right" type="button" id="add_item_btn" onclick="add_item()"><span class="fa fa-plus"></span> Add Item </button>
@@ -94,15 +94,16 @@
             <?php 
                $row_num = 1;
             ?>
-            <table id="items_delivered" class="table table-bordered table-striped" >
+            <table id="items_issued" class="table table-bordered table-striped" >
                 <thead class="bg-primary">
                   <tr>
+                    <th>Item ID</th>
                     <th>Item Code</th>
                     <th>Item Description</th>
                     <th>Unit of Measure</th>
                     <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Amount</th>
+                    <!-- <th>Price</th>
+                    <th>Amount</th> -->
                   </tr>
                 </thead>
                 <tfoot>
@@ -111,8 +112,9 @@
                     <th></th>
                     <th></th>
                     <th></th>
-                    <th>Total Amount</th>
-                    <th name="footer_total" id="footer_total">0</th>
+                    <th></th>
+                   <!--  <th>Total Amount</th>
+                    <th name="footer_total" id="footer_total">0</th> -->
                   </tr>
                 </tfoot>
                 <tbody>
@@ -120,7 +122,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-primary btn-sm save_delivery" style="padding-left:30px" type="button" id="save_delivery" ></span> Save </button>
+            <button class="btn btn-primary btn-sm save_delivery" style="padding-left:30px" type="button" id="save_issuance" ></span> Save </button>
             <button class="btn btn-secondary btn-sm" style="padding-left:30px" type="button" id="cancel_assign" onclick="window.location='suppliesmasterlist.php'">Cancel </button>
           </div>
         </div>
@@ -137,18 +139,38 @@
   <script type="text/javascript">
 
     function ichange(){
-      var icode = document.getElementById("item_code").value;
-      $('#stock').html(icode);
-      };
+      
+      var item_id = document.getElementById("item_id").value;
+      //alert(item_id);
+      $.ajax({
+        url: "getsuppliesstockbalance.php?item_id="+item_id,
+        type: 'get',
+        dataType: 'text',
+        success:function(response){
+          $('#stock').val(response);
+          //console.log(response);
+          //$('#stock').html(response);
+        }
+      });
+
+
+
+
+      //$('#stock').html(icode);
+    };
     
 
     function add_item(){
+
       var cr_number = document.getElementById("cr_number").value;
       var department = document.getElementById("department").value;
       var tran_date = document.getElementById("tran_date").value;
       var item_id = document.getElementById("item_id").value;
-      var qty = document.getElementById("quantity").value;
-      var price = document.getElementById("price").value;
+      var qty = parseFloat(document.getElementById("quantity").value);
+      var stock = parseFloat(document.getElementById("stock").value);
+      //var price = document.getElementById("price").value;
+
+     
 
         if (cr_number == ''){
           alert_toast("Control Number required");
@@ -167,49 +189,55 @@
           alert_toast("Please Select Item");
           return;
         }
-        if (qty == "0" || price == "0.00"){
-          alert_toast("Quantity and Amount should not be zero");
+        if (qty == "0" ){
+          alert_toast("Quantity should not be zero");
           return;
          
         }
+       
+        if (qty > stock){
+          alert_toast("Quantity to be issued must not be greater than the stock on hand");
+          document.getElementById('quantity').value = "0";
+          qty = 0;
+          $('#quantity').focus();
+          $('#quantity').select();
+          return;
+        }
        $.ajax({
-         url:"getiteminfo2.php?id="+item_id+"&qty="+qty+"&price="+price,
+         url:"getitemforissuance.php?id="+item_id+'&qty='+qty,
          type: 'get',
          dataType: 'html',
          success:function(response){
-            $('#items_delivered').append(response);
-            $('#items_delivered').find('tr').each(function (i, el) {
-             var prev = document.getElementById("footer_total").value;
-             var total_amount = 0;
-             var $tds = $(this).find('td');
-             var amount = parseFloat($tds.eq(5).text());
- 
-//              $total_amount = $tamt+price;
-    
-             total_amount = parseFloat(prev)+amount;
- //            $('#footer_total').html(total_amount);
-            $('#footer_total').html($tamt);
-   
+            $('#items_issued').append(response);
 
-              //}
-            
-              //alert(total_amount);
-              document.getElementById('po_number').disabled = true;
+            $('#items_issued').find('tr').each(function (i, el) {
+             // var prev = document.getElementById("footer_total").value;
+             // var total_amount = 0;
+             var $tds = $(this).find('td');
+             // var amount = parseFloat($tds.eq(5).text());
+ 
+             //total_amount = parseFloat(prev)+amount;
+ 
+             //$('#footer_total').html(total_amount);
+  
+              document.getElementById('cr_number').disabled = true;
               document.getElementById('tran_date').disabled = true;
+              document.getElementById('department').disabled = true;
+              
               document.getElementById('item_id').value = "";
               document.getElementById('quantity').value = "0";
-              document.getElementById('price').value = "0.00";
+              document.getElementById('stock').value = "0";
+              //document.getElementById('price').value = "0.00";
               
             });   
  
          }
+
         });
 
 
     };
-
-  
-           
+       
 
       $('#cancel_assign').click(function(){
 
@@ -220,24 +248,22 @@
       });
 
 
-      $('#save_delivery').click(function(){
+      $('#save_issuance').click(function(){
 
         var cr_number = document.getElementById('cr_number').value;
         var tran_date = document.getElementById('tran_date').value;
-//        var pid = preg_replace('/[^0-9]/', '', document.getElementById('department').value); 
-        //var item_id = document.getElementById('item_id').value;
-//        $dep = document.getElementById('department').value;
+        var department = document.getElementById('department').value;
 
-        console.log(cr_number);
-        $('#items_delivered').find('tr').each(function (i, el) {
+        
+        $('#items_issued').find('tr').each(function (i, el) {
             var $tds = $(this).find('td');
             var item_id = String($tds.eq(0).text());
-            var qty = parseFloat($tds.eq(3).text());
-            var price = parseFloat($tds.eq(4).text());
-              console.log(item_id);   
-              if (item_id != 'Item Code' && item_id != '' )
+            var qty = parseFloat($tds.eq(4).text());
+            //var price = parseFloat($tds.eq(4).text());
+             
+              if (item_id != 'Item ID' && item_id != '' )
               {
-                            
+                       
                 //start_load()
                 $.ajax({
                     type: "POST",
@@ -245,16 +271,17 @@
                     data: {
                         cr_number:cr_number,
                         tran_date:tran_date, 
+                        department: department,
                         item_id:item_id,
-                        qty:qty,
-                        price:price
+                        qty:qty
+                        //price:price
                     },
                     success: function(resp) {
                       if(resp == 1){
                          alert_toast("Issuance successfully saved","success");
                          setTimeout(function(){
                          //location.reload();
-                         location.href="suppliesdelivery.php";
+                         location.href="suppliesissuance.php";
                          },1000)
                       }
                     },

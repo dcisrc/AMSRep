@@ -45,11 +45,13 @@ if(isset($_GET['id'])){
 			<div class="form-group col-md-4">
 				<label>Unit of Measure</label>
 				<select class="custom-select browser-default " name="unit_of_measure">
-					<option value="">pc</option>
+					<option value=""></option>
 					<option value="pc">pc</option>
 					<option value="set">set</option>
 					<option value="box">box</option>
 					<option value="pair">pair</option>
+					<option value="ream">ream</option>
+
 				</select>
 			</div>
 

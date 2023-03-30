@@ -24,6 +24,7 @@ Class Action {
 		$password = str_replace("'", '', $password);
 		$qry = $this->db->query("SELECT * FROM users where username = '".$username."'");  // and password = '".$password."'");
 		if($qry->num_rows > 0){
+			
 			foreach ($row=$qry->fetch_array() as $key => $value) {
 				if($key != 'passwors' && !is_numeric($key))
 					$_SESSION['login_'.$key] = $value;
@@ -44,6 +45,7 @@ Class Action {
 		}
 		else{
 			return 3;
+			
 		}
 	}
 
@@ -343,6 +345,19 @@ Class Action {
 			return 1;
 	}
 
+	function add_item_issuance(){
+		extract($_POST);
+		$data = " item_id='$item_id',";
+ 		$data .= " ref_no='$cr_number', ";
+ 		$data .= " tran_date='$tran_date',";
+ 		$data .= " department_id='$department',";
+ 		$data .= " tran_code = 'WDW' ,";
+ 		$data .= " wdw = '$qty'";
+ 		$save = $this->db->query("INSERT INTO supplies_txn set ".$data);
+		if($save)
+			return 1;
+	}
+
 	function save_inventory(){
 		extract($_POST);
 		$data =" inv_date='$inv_date' ";
@@ -592,18 +607,18 @@ Class Action {
 			return 1;
 	}
 
-    function add_item_issuance(){
-		extract($_POST);
-		$data = " item_id='$item_id',";
- 		$data .= " ref_no='$cr_number', ";
- 		$data .= " tran_date='$tran_date',";
- 		$data .= " tran_code = 'WDW' ,";
- 		$data .= " wdw = '$qty' ,";
- 		$data .= " purchase_price = '$price' ,";
-		$data .= " dep_id = '$department'";
-		$save = $this->db->query("INSERT INTO supplies_txn set ".$data);
-		if($save)
-			return 1;
-	}
+   //  function add_item_issuance(){
+	// 	extract($_POST);
+	// 	$data = " item_id='$item_id',";
+ 	// 	$data .= " ref_no='$cr_number', ";
+ 	// 	$data .= " tran_date='$tran_date',";
+ 	// 	$data .= " tran_code = 'WDW' ,";
+ 	// 	$data .= " wdw = '$qty' ,";
+ 	// 	$data .= " purchase_price = '$price' ,";
+	// 	$data .= " dep_id = '$department'";
+	// 	$save = $this->db->query("INSERT INTO supplies_txn set ".$data);
+	// 	if($save)
+	// 		return 1;
+	// }
 
 }
