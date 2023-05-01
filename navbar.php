@@ -55,6 +55,7 @@ button.nav-item:hover, .nav-item.active {
 <?php
 
   require_once('systemsettings.php');
+  require_once('system_permission.php');
 
 ?>
 <nav class="sidebar card py-2 mb-4 mx-lt-5 bg-dark" id="sidebar">
@@ -64,76 +65,167 @@ button.nav-item:hover, .nav-item.active {
   <li class="nav-item">
     <a class="nav-link nav-item" href="home.php"><span class='icon-field'><i class="fa fa-home"></i></span> Home </a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link nav-item" href="assetsmasterlist.php"><span class='icon-field'><i class="fa fa-keyboard"></i></span> Asset Masterlist </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link nav-item" href="assetassignment.php"><span class='icon-field'><i class="fa fa-hand-lizard"></i></span> Asset Assignment </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link nav-item" href="category.php"><span class='icon-field'><i class="fa fa-object-group"></i></span> Asset Categories </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link nav-item" href="inventory.php"><span class='icon-field'><i class="fa fa-barcode"></i></span> Asset Inventory</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link nav-item" href="assettransfers.php"><span class='icon-field'><i class="fa fa-luggage-cart"></i></span> Asset Transfer/Return </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link nav-item" href="suppliesmasterlist.php"><span class='icon-field'><i class="fa fa-keyboard"></i></span> Supplies Masterlist </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link nav-item" href="suppliesdelivery.php"><span class='icon-field'><i class="fa fa-keyboard"></i></span> Supplies Delivery </a>
-  </li>
-   <li class="nav-item">
-    <a class="nav-link nav-item" href="suppliesissuance.php"><span class='icon-field'><i class="fa fa-keyboard"></i></span> Supplies Issuance </a>
-  </li>
 
-  <li class="nav-item">
-    <a class="nav-link nav-item" href="employee.php"><span class='icon-field'><i class="fa fa-user-circle"></i></span> Employees</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link nav-item" href="department.php"><span class='icon-field'><i class="fa fa-building"></i></span> Departments</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link nav-item" href="office.php"><span class='icon-field'><i class="fa fa-building"></i></span> Offices</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link nav-item" href="location.php"><span class='icon-field'><i class="fa fa-map-marker"></i></span> Locations </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link nav-item" href="fundcluster.php"><span class='icon-field'><i class="fa fa-money-bill-wave"></i></span> Fund Clusters </a>
-  </li>
+  <?php
+    if (checkPermissions($_SESSION['login_id'],10)=='true'){
+    
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="assetsmasterlist.php"><span class="icon-field"><i class="fa fa-keyboard"></i></span> Asset Masterlist </a>
+            </li>';
+    } ?>
+
+  <?php
+    if (checkPermissions($_SESSION['login_id'],11)=='true'){
+    
+      echo ' <li class="nav-item">
+            <a class="nav-link nav-item" href="assetassignment.php"><span class="icon-field"><i class="fa fa-hand-lizard"></i></span> Asset Assignment </a>
+            </li> ';
+    } ?>
+
+  <?php
+    if (checkPermissions($_SESSION['login_id'],4)=='true'){
+    
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="category.php"><span class="icon-field"><i class="fa fa-object-group"></i></span> Asset Categories </a>
+            </li>';
+    } ?>
+
+  <?php
+    if (checkPermissions($_SESSION['login_id'],12)=='true'){
+    
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="inventory.php"><span class="icon-field"><i class="fa fa-barcode"></i></span> Asset Inventory</a>
+            </li>';
+
+    } ?>
+  <?php
+    if (checkPermissions($_SESSION['login_id'],18)=='true'){
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="assettransfers.php"><span class="icon-field"><i class="fa fa-luggage-cart"></i></span> Asset Transfer/Return </a>
+            </li>';
+    } ?> 
+  <?php
+    if (checkPermissions($_SESSION['login_id'],13)=='true'){
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="suppliesmasterlist.php"><span class="icon-field"><i class="fa fa-keyboard"></i></span> Supplies Masterlist </a>
+            </li>';
+    } ?> 
+  <?php
+    if (checkPermissions($_SESSION['login_id'],14)=='true'){
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="suppliesdelivery.php"><span class="icon-field"><i class="fa fa-keyboard"></i></span> Supplies Delivery </a>
+            </li>';
+    } ?> 
+  <?php
+    if (checkPermissions($_SESSION['login_id'],15)=='true'){
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="suppliesissuance.php"><span class="icon-field"><i class="fa fa-keyboard"></i></span> Supplies Issuance </a>
+            </li>';
+     } ?>         
+  <?php
+    if (checkPermissions($_SESSION['login_id'],5)=='true'){
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="employee.php"><span class="icon-field"><i class="fa fa-user-circle"></i></span> Employees</a>
+            </li>';
+    } ?>
+  <?php
+    if (checkPermissions($_SESSION['login_id'],6)=='true'){
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="department.php"><span class="icon-field"><i class="fa fa-building"></i></span> Departments</a>
+            </li>';
+    } ?>
+  <?php
+    if (checkPermissions($_SESSION['login_id'],7)=='true'){
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="office.php"><span class="icon-field"><i class="fa fa-building"></i></span> Offices</a>
+            </li>';
+    } ?>
+  <?php
+    if (checkPermissions($_SESSION['login_id'],8)=='true'){
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="location.php"><span class="icon-field"><i class="fa fa-map-marker"></i></span> Locations </a>
+            </li>';
+    } ?>
+    <?php
+    if (checkPermissions($_SESSION['login_id'],29)=='true'){
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="notifications.php"><span class="icon-field"><i class="fa fa-envelope-open-text"></i></span> Notification Maintenance </a>
+            </li>';
+   } ?>     
+  <?php
+    if (checkPermissions($_SESSION['login_id'],9)=='true'){
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="fundcluster.php"><span class="icon-field"><i class="fa fa-money-bill-wave"></i></span> Fund Clusters </a>
+            </li>';
+   } ?>        
+     
   <!--li class="nav-item">
     <a class="nav-link nav-item" href="#"><span class='icon-field'><i class="fa fa-object-group"></i></span> Asset Types </a>
   </li>-->
-
-  <li class="nav-item has-submenu">
-    <a class="nav-link nav-item" href="#"><span class='icon-field'><i class="fa fa-chart-bar"></i></span> Reports <i class="fa fa-caret-down"></i></a>
-    <ul class="submenu collapse">
-      <li><a class="nav-link nav-item sepc" id="sepc" href="#">Employee Ledger Card</a></li>
-      <li><a class="nav_link nav-item" id="rpcppe" href="#">Physical Count of PPE</a></li>
-      <li><a class="nav_link nav-item" id="iirup1" href="#">IIRUP</a></li>
-      <li><a class="nav_link nav-item" id="wmr" href="#">Waste Material Report</a></li>
-      <li><a class="nav-link nav-item" href="reports/assetperemployee.php"> Assets Per Employee</a></li>
-      <li><a class="nav-link nav-item" href="reports/assetpercategory.php"> Assets Per Category</a></li>
-      <li><a class="nav-link nav-item" href="reports/assetperdepartment.php"> Assets Per Dept. </a></li>
-      <!-- <li><a class="nav-link nav-item" href="unserviceableassets.php"> List of Unserviceable Property </a> </li> -->
-      <!-- <li><a class="nav-link nav-item" href="unlocatedassets.php"> List of Unlocated Items </a> </li> -->
-      <li><a class="nav-link nav-item" href="reports/activitylogs.php"> Activity Logs </a> </li>
-      <li><a class="nav-link nav-item" href="forms/barcodestickers.php"> Barcode Stickers </a> </li>
-    </ul>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link nav-item" href="roles.php"><span class='icon-field'><i class="fa fa-life-ring"></i></span> User Roles </a>
-  </li>
+  <?php
+    if (checkPermissions($_SESSION['login_id'],16)=='true'){
+      echo '
+        <li class="nav-item has-submenu">
+          <a class="nav-link nav-item" href="#"><span class="icon-field"><i class="fa fa-chart-bar"></i></span> Reports <i class="fa fa-caret-down"></i></a>
+          <ul class="submenu collapse">
+            <li><a class="nav-link nav-item" href="reports/assetperemployee.php"> Assets Per Employee</a></li>
+            <li><a class="nav-link nav-item" href="reports/assetpercategory.php"> Assets Per Category</a></li>
+            <li><a class="nav-link nav-item" href="reports/assetperdepartment.php"> Assets Per Dept. </a></li>';
+  ?>
+  <?php
+    if (checkPermissions($_SESSION['login_id'],20)=='true'){
+      echo '<li><a class="nav-link nav-item sepc" id="sepc" href="#">Employee Ledger Card</a></li>';
+  }?>     
+  <?php
+    if (checkPermissions($_SESSION['login_id'],21)=='true'){
+      echo '<li><a class="nav_link nav-item" id="rpcppe" href="#">Physical Count of PPE</a></li>';
+  }?>   
+  <?php
+    if (checkPermissions($_SESSION['login_id'],22)=='true'){    
+       echo '<li><a class="nav_link nav-item" id="iirup1" href="#">IIRUP</a></li>';
+  }?>     
+  <?php
+    if (checkPermissions($_SESSION['login_id'],23)=='true'){    
+       echo '<li><a class="nav_link nav-item" id="wmr" href="#">Waste Material Report</a></li> ';
+  }?>     
+       <!-- <li><a class="nav-link nav-item" href="unserviceableassets.php"> List of Unserviceable Property </a> </li> -->
+       <!-- <li><a class="nav-link nav-item" href="unlocatedassets.php"> List of Unlocated Items </a> </li> -->
+  <?php
+    if (checkPermissions($_SESSION['login_id'],27)=='true'){    
+       echo '<li><a class="nav-link nav-item" href="reports/activitylogs.php"> Activity Logs </a> </li>';
+  }?>   
+  <?php
+    if (checkPermissions($_SESSION['login_id'],28)=='true'){    
+       echo '<li><a class="nav-link nav-item" href="forms/barcodestickers.php"> Barcode Stickers </a> </li>';
+  }?>     
+   <?php    
+    echo '</ul>
+  </li>';
+   ?>
+   <?php 
+   } ?>  
+<?php
+    if (checkPermissions($_SESSION['login_id'],2)=='true'){
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="roles.php"><span class="icon-field"><i class="fa fa-life-ring"></i></span> User Roles </a>
+        </li>';
+    } ?>                
  <!--  <li class="nav-item">
     <a class="nav-link nav-item" href="index.php?page=rolepermission"><span class='icon-field'><i class="fa fa-hard-hat"></i></span> Role Permissions </a>
   </li> -->
+<?php
+    if (checkPermissions($_SESSION['login_id'],2)=='true'){
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="permission.php"><span class="icon-field"><i class="fa fa-thumbs-up"></i></span> Permission Maintenance </a>
+            </li>';
+    } ?>        
 
-  <li class="nav-item">
-    <a class="nav-link nav-item" href="users.php"><span class='icon-field'><i class="fa fa-user"></i></span> User Maintenance </a>
-  </li>
+<?php
+    if (checkPermissions($_SESSION['login_id'],1)=='true'){
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="users.php"><span class="icon-field"><i class="fa fa-user"></i></span> User Maintenance </a>
+            </li>';
+  } ?>           
 
 
 </ul>
@@ -145,17 +237,33 @@ button.nav-item:hover, .nav-item.active {
   <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content">
     <div class="modal-header">
+     
+        <h5 class="modal-title">Select Employee</h5>
 
-      <h5 class="modal-title">Select Employee</h5>
-       
-      <button type="button" class="close" data-dismiss="modal" aria-label="x">
+        
+        <button type="button" class="close" data-dismiss="modal" aria-label="x">
           <span aria-hidden="true">×</span>
-      </button>
+        </button>
+   
     </div>
 
     <div class="modal-body">
-      <div class="row" style="float:right;">
-      <div class="input-group" >
+      <div class="row">
+        <div class="col-md-6">
+        <div class="input-group ">
+        <div>
+        
+          <select class="form-select"  id="format" name="format" >
+            
+            <option value="PDF" >PDF</option> 
+            <option value="PDF" >Excel</option> 
+         
+          </select>
+        </div>
+        </div>  
+        </div>
+        <div class="col-md-6">
+        <div class="input-group float-right" >
           <div class="form-outline">
             <input type="search" placeholder="Search Employee" id="search_text" class="form-control" />
    
@@ -164,8 +272,10 @@ button.nav-item:hover, .nav-item.active {
             <i class="fas fa-search"></i>
           </button>
           
+        </div>
+        </div>
       </div>
-      </div>
+      <br>
       <input type="hidden" id="uri" />
         <table id="table" class="table1 table-hover">
               <thead>
@@ -227,59 +337,19 @@ button.nav-item:hover, .nav-item.active {
         <input type="text" id="cut_off_date" name="cut_off_date" required="required" class="form-control text-right" onfocus="(this.type='date')" step="any" value="<?php echo date("m/d/Y") ?>" />
         </div>
       </div>
-      <!-- <div class="row">
-        <table id="table" class="table table-hover">
-          
-        </select>
-              <thead>
-                <tr>
-                  <th>Select Category</th>
-                  
-                </tr>
-              </thead>
-              <tbody >
-
-                <?php 
-
-                  //$i = 1;
-                  //$category = $conn->query("SELECT * FROM category order by id asc");
-                  //while($row=$category->fetch_assoc()):
-                  //  $catid=$row['id'];
-                  //  $catname=$row['name'];
-
-
-                  //  echo '<tr>';
-                  //  echo  '<td><a href="reports/rpcppe.php?catid='.$catid.'">'. $catname .'</a></td>';
-                  
-                  //  echo '</tr>';
-
-
-                ?>
-                
-                <?php //endwhile; ?>
-                
-              </tbody>
-
-
-        </table> 
- 
-      </div>    --> 
-   
-
       
  
     </div>
     <div class="modal-footer">
-      <button class="btn btn-primary btn-sm save_selected" style="padding-left:30px" type="button" id="view_rpt" ></span> View </button>
-            <button class="btn btn-secondary btn-sm" style="padding-left:30px" type="button" id="cancel_assign" onclick="window.location='assetassignment.php'">Cancel </button>
+      <button class="btn btn-primary btn-sm save_selected" style="padding-left:30px" type="button" id="view_excel" ></span> Export XLS </button>
+      <button class="btn btn-primary btn-sm save_selected" style="padding-left:30px" type="button" id="view_rpt" ></span> View PDF </button>
+      <button class="btn btn-secondary btn-sm" style="padding-left:30px" type="button" id="cancel_assign" onclick="window.location='assetassignment.php'">Cancel </button>
     </div>  
 
  
   </div> 
   </div>
 </div>
-
-
 
 
 
@@ -332,8 +402,19 @@ button.nav-item:hover, .nav-item.active {
         window.location="reports/rpcppe.php?catid="+$catid+'&cutoff='+$cutoff;
     })
 
+    $('#view_excel').click(function(){
+
+ 
+        $catid=$('#category option:selected').val();
+        $cutoff=$('#cut_off_date').val();
+        window.location="reports/rpcppe_excel.php?catid="+$catid+'&cutoff='+$cutoff;
+        
+       
+       
+    });
+
   $('#sepc').click(function(){
-        $('#uri').val('employeeledgercard');
+        $('#uri').val('employeeledgercardLS');
         $('#selemployee_modal').modal('show');
     })
 

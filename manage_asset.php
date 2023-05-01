@@ -17,7 +17,6 @@ include 'db_connect.php';
 </style>
 <div class="container-fluid">
 	
-	
 	<form id='asset_frm'>
 		<input type="hidden" name="id" id="id" value="<?php echo isset($id) ? $id : "" ?>" />
 		<input for="module" id="module" name="module" value="Manage Assets" hidden>
@@ -118,8 +117,6 @@ include 'db_connect.php';
 
 		<div class="clearfix"></div>
 
-			
-
 		<div class="row">
 
 			<div class="form-group col-md-4">
@@ -135,7 +132,6 @@ include 'db_connect.php';
 				</select>
 			</div>
 
-
 			<div class="form-group col-md-4">
 				<label>Invoice Number</label>
 			
@@ -149,7 +145,6 @@ include 'db_connect.php';
 					<option value="">pc</option>
 					<option value="pc">pc</option>
 					<option value="set">set</option>
-					
 					
 				</select>
 			</div>
@@ -259,6 +254,7 @@ include 'db_connect.php';
 
 <script>
 
+
 	//display hidden fields on edit
 	if (document.getElementById('id').value !== ""){
 		document.getElementById('hiddenrows').hidden = false;
@@ -267,25 +263,43 @@ include 'db_connect.php';
     
 	$(document).ready(function(){
 	 	
-		
 		$('#asset_frm').submit(function(e){
 				e.preventDefault()
 				start_load();
-			$.ajax({
-				url:'ajax.php?action=save_asset',
-				method:"POST",
-				data:$(this).serialize(),
-				error:err=>console.log(),
-				success:function(resp){
-						if(resp == 1){
-							alert_toast("Asset data successfully saved","success");
+				if (document.getElementById('id').value !== ""){
+					$.ajax({
+						url:'ajax.php?action=update_asset',
+						method:"POST",
+						data:$(this).serialize(),
+						error:err=>console.log(),
+						success:function(resp){
+							if(resp == 1){
+								alert_toast("Asset data successfully updated","success");
 								setTimeout(function(){
-								location.reload();
-
-							},1000)
+									location.reload();
+								},1000)
+							}
 						}
+					})
 				}
-			})
+				else{
+					$.ajax({
+						url:'ajax.php?action=save_asset',
+						method:"POST",
+						data:$(this).serialize(),
+						error:err=>console.log(),
+						success:function(resp){
+							if(resp == 1){
+								alert_toast("Asset data successfully saved","success");
+								setTimeout(function(){
+									location.reload();
+								},1000)
+							}
+						}
+					})
+				}	
 		})
 	})
+
+
 </script>

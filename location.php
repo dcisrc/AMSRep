@@ -24,14 +24,12 @@
 						  <h5 class="card-title mb-0">Add New Location</h5>
 				  	</div>
 					<div class="card-body">
-							<input type="hidden" name="id">
+							<input type="hidden" name="id" id="id" value="<?php echo isset($id) ? $id : "" ?>" />
+          		<input for="module" id="module" name="module" value="Location Module" hidden>							
 							<div class="form-group">
 								<label class="control-label">Location</label>
 								<textarea name="name" id="" cols="30" rows="2" class="form-control"></textarea>
 							</div>
-							
-							
-							
 					</div>
 							
 					<div class="card-footer">
@@ -103,15 +101,38 @@
 		max-height: :150px;
 	}
 </style>
+
 <script>
 	function _reset(){
+
 		$('[name="id"]').val('');
 		$('#manage-location').get(0).reset();
+
 	}
-	
+
 	$('#manage-location').submit(function(e){
 		e.preventDefault()
 		start_load()
+ 	  if (document.getElementById('id').value !== ""){
+		$.ajax({
+			url:'ajax.php?action=update_location',
+			data: new FormData($(this)[0]),
+		    cache: false,
+		    contentType: false,
+		    processData: false,
+		    method: 'POST',
+		    type: 'POST',
+ 			  success:function(resp){
+				if(resp==1){
+					alert_toast("Location data successfully updated",'success')
+					setTimeout(function(){
+						location.reload()
+					},1000)
+				}
+			}
+		})
+	}
+		else{
 		$.ajax({
 			url:'ajax.php?action=save_location',
 			data: new FormData($(this)[0]),
@@ -122,22 +143,16 @@
 		    type: 'POST',
 			success:function(resp){
 				if(resp==1){
-					alert_toast("Data successfully added",'success')
+					alert_toast("Location data successfully added",'success')
 					setTimeout(function(){
 						location.reload()
-					},1500)
-
-				}
-				else if(resp==2){
-					alert_toast("Data successfully updated",'success')
-					setTimeout(function(){
-						location.reload()
-					},1500)
-
+					},1000)
 				}
 			}
 		})
-	})
+  }
+})
+
 	$('.edit_location').click(function(){
 		start_load()
 		var cat = $('#manage-location')
@@ -146,20 +161,22 @@
 		cat.find("[name='name']").val($(this).attr('data-name'))
 		end_load()
 	})
+
 	$('.delete_location').click(function(){
-		_conf("Are you sure to delete this category?","delete_category",[$(this).attr('data-id')])
+		_conf("Are you sure to delete this record?","idelete_location",[$(this).attr('data-id')])
 	})
+
 	function displayImg(input,_this) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
         	$('#cimg').attr('src', e.target.result);
         }
-
         reader.readAsDataURL(input.files[0]);
     }
 }
-	function delete_location($id){
+
+	function idelete_location($id){
 		start_load()
 		$.ajax({
 			url:'ajax.php?action=delete_location',

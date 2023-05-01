@@ -35,7 +35,7 @@
             
             </div>
             <div class="col-md-2" >
-            <button class="btn btn-primary btn-sm btn-block float-right" type="button" id="upload_asset_btn"><span class="fa fa-upload"></span> Upload </button>
+              <button class="btn btn-primary btn-sm btn-block float-right" type="button" id="upload_asset_btn"><span class="fa fa-upload"></span> Upload </button>
             </div>
             
             <div class="col-md-2" >
@@ -53,7 +53,8 @@
               <select class="form-control status-dropdown">
                 <option value="">All</option>
                 <option value="Assigned">Assigned</option>
-                <option value="Unserviceable">UnAssigned</option>
+                <option value="Unserviceable">Unserviceable</option>
+                <option value="UnAssigned">UnAssigned</option>
               
               </select>
             </div>
@@ -61,6 +62,8 @@
           </div>
           <!--end filtering -->
           <div class="card-body">
+            <input type="hidden" name="id">
+            <input for="module" id="module" name="module" type="text" value="Asset Masterlist Module" hidden >
             <table id="table1" class="table table-hover "> 
                 <thead>
                   <tr>
@@ -204,7 +207,7 @@
       $('.status-dropdown').val(status)
       console.log(status)
       
-     dataTable.column(6).search(status).draw();
+      DataTable.column(6).search(status).draw();
       })
     
   </script>

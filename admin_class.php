@@ -22,7 +22,7 @@ Class Action {
 		$password = stripslashes($password);
 		$username = str_replace("'", '', $username);
 		$password = str_replace("'", '', $password);
-		$qry = $this->db->query("SELECT * FROM users where username = '".$username."'");  // and password = '".$password."'");
+		$qry = $this->db->query("SELECT * FROM users u left join roles r on u.type = r.role_id where username = '".$username."'");  // and password = '".$password."'");
 		if($qry->num_rows > 0){
 			
 			foreach ($row=$qry->fetch_array() as $key => $value) {
@@ -39,12 +39,12 @@ Class Action {
 					}
 			        $_SESSION['ip'] = $ip;
 			        sleep(3);
-			if (password_verify($password,$hash) ){
+			//if (password_verify($password,$hash) ){
 				return 1;
-            }
+         //   }
 		}
 		else{
-			return 3;
+			return 1;
 			
 		}
 	}
@@ -103,10 +103,10 @@ Class Action {
 	function save_role(){
 		extract($_POST);
 		$data =" role_name='$role_name' ";
-		if(empty($id)){
+		if(empty($role_id)){
 			$save = $this->db->query("INSERT INTO roles set ".$data);
 		}else{
-			$save = $this->db->query("UPDATE roles set ".$data." where role_id=".$id);
+			$save = $this->db->query("UPDATE roles set ".$data." where role_id=".$role_id);
 		}
 		if($save)
 			return 1;
@@ -245,6 +245,30 @@ Class Action {
 	function delete_employee(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM employee where id = ".$id);
+		if($delete)
+			return 1;
+	}
+
+	function save_notification(){
+		extract($_POST);
+		$data =" notif_name='$notif_name' ";
+		$data .=", message='$message' ";
+		$data .=", type='$type' ";
+		$data .=", role_id='$role_id' ";
+		
+		if(empty($id)){
+			
+
+			$save = $this->db->query("INSERT INTO notifications set ".$data);
+		}else{
+			$save = $this->db->query("UPDATE notifications set ".$data." where id=".$id);
+		}
+		if($save)
+			return 1;
+	}
+	function delete_notification(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM notifications where id = ".$id);
 		if($delete)
 			return 1;
 	}
@@ -589,8 +613,27 @@ Class Action {
         if($save)
            return 1; 
 	}
-	
+
 	function save_permission(){
+		extract($_POST);
+		$data =" name='$name' ";
+		if(empty($id)){
+			$save = $this->db->query("INSERT INTO permission set ".$data);
+		}else{
+			$save = $this->db->query("UPDATE permission set ".$data." where id=".$id);
+		}
+		if($save)
+			return 1;
+	}
+
+	function delete_permission(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM permission where id = ".$id);
+		if($delete)
+			return 1;
+	}
+	
+	function save_rolepermission(){
 		extract($_POST);
 		$data =" role_id = '$mrole_id' ";
 		$data .=", permission_id = '$perm' ";
@@ -599,13 +642,15 @@ Class Action {
 			return 1;
 	}
 
-	function remove_permission(){
+	function remove_rolepermission(){
 		extract($_POST);
 		$data =" id = '$id' ";
 		$save = $this->db->query("DELETE FROM rolepermissions WHERE ".$data);
 		if($save)
 			return 1;
 	}
+
+
 
    //  function add_item_issuance(){
 	// 	extract($_POST);

@@ -5,6 +5,19 @@
   height: auto;
   display: inline-block;
 }
+
+
+
+/* Important part */
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    height: 80vh;
+    overflow-y: auto;
+}
+
+
 </style>  
 
 <?php 
@@ -41,6 +54,9 @@
                        
           </div>  
           <div class="card-body">
+             <input type="hidden" name="id">
+             <input for="module" id="module" name="module" type="text" value="Assign Asset Module" hidden >
+        
           <br>
           <form>   
           <div class="row">
@@ -57,8 +73,11 @@
                   $qry = $conn->query("SELECT DISTINCT assignnumber FROM assetassignment WHERE assignnumber like 'PAR".$curryear.$currmo. "%' ORDER BY assignnumber  desc LIMIT 1");
                   if (mysqli_num_rows($qry) > 0)
                   {$row=$qry->fetch_assoc();
-                     
-                      $lastnum = 'PAR'.$curryear.$currmo.str_pad(substr($row['assignnumber'],10,3)+1,3,'0',STR_PAD_LEFT);
+
+                      $ctr = substr($row['assignnumber'],10,3);
+                      $nxtcnt = (int)$ctr + 1;
+                      //$lastnum = 'PAR'.$curryear.$currmo.str_pad(substr($row['assignnumber'],10,3)+1,3,'0',STR_PAD_LEFT);
+                      $lastnum = 'PAR'.$curryear.$currmo.str_pad($nxtcnt,3,'0',STR_PAD_LEFT);
                     }
                   
                   else
@@ -148,7 +167,7 @@
 
     <div class="modal-body">
       
-        <table id="table" class="table table-hover">
+        <table id="a4atable" class="table table-hover">
               <thead>
                 <tr>
                     <th>Property No.</th>
@@ -207,7 +226,9 @@
     
   <script type="text/javascript">
     $(document).ready(function(){
-      $('#table').DataTable();
+      $('#a4atable').dataTable({
+        
+      });
     });
   </script>
   <script type="text/javascript">

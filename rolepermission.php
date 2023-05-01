@@ -23,10 +23,9 @@
 			
 				<div class="card">
 					<div class="card-header"><h5><strong>
-						  Permission Maintenance</strong></h5>
+						  Role Permission Maintenance</strong></h5>
 				  	</div>
 					<div class="card-body ">
-	
 							<div class="row">
 							<?php
 							if(isset($_GET['role_id'])){
@@ -59,7 +58,7 @@
 							<thead>
 								<tr>
 									<th class="text-center">#</th>
-									<th class="text-center">Permission</th>
+									<th class="text-center">Permissions Granted</th>
 									<th class="text-center">Action</th>
 								</tr>
 							</thead>
@@ -67,36 +66,11 @@
 							<?php	
 							    $i=1;	
 								if(isset($_GET['role_id'])){
-									$qry = $conn->query("SELECT id, permission_id FROM rolepermissions where role_id = ".$_GET['role_id']);
+									$qry = $conn->query("SELECT rp.id, permission_id, p.name as perm FROM rolepermissions rp left join permission p on rp.permission_id=p.id where role_id = ".$_GET['role_id']);
 	 									if (mysqli_num_rows($qry) > 0){
 										while($row=$qry->fetch_assoc()):
-											if ($row['permission_id'] == 1){
-												$permission = 'User Maintenance';
-											}
-											elseif ($row['permission_id'] == 2){
-												$permission = 'Role Maintenance';
-											}
-											elseif ($row['permission_id'] == 4){
-												$permission = 'Employee Maintenance';
-											}
-											elseif ($row['permission_id'] == 5){
-												$permission = 'Department Maintenance';
-											}
-											elseif ($row['permission_id'] == 6){
-												$permission = 'Reference Tables';
-											}
-											elseif ($row['permission_id'] == 7){
-												$permission = 'Asset Property';
-											}
-											elseif ($row['permission_id'] == 8){
-												$permission = 'Asset Assignment';
-											}
-											elseif ($row['permission_id'] == 9){
-												$permission = 'Reports';
-											}
-											elseif ($row['permission_id'] == 10){
-												$permission = 'Audit';
-											}
+											
+											$permission = $row['perm'];
 
 							?>	
 								<tr>
@@ -138,18 +112,16 @@
 
 	<form action="" id='manage-rolepermission'>
 		<input type="hidden" for="mrole_id" name="mrole_id"  id="mrole_id">
-		
+		<input for="module" id="module" name="module" type="text" value="Role Permission Module" hidden >					
 		<div class="form-group">Permissions</label>
-			<select name="perm" id="perm" class="custom-select">
-				<option value="1" >User Maintenance</option>
-				<option value="2" >Role Maintenance</option>
-				<option value="4" >Employees Maintenance</option>
-				<option value="5" >Department Maintenance</option>
-				<option value="6" >Reference Table Build-up</option>
-				<option value="7" >Asset Property Maintenance</option>
-				<option value="8" >Asset Assignment Module</option>
-				<option value="9" >Reports Module</option>
-				<option value="10" >Audit Module</option>
+			<select class="custom-select browser-default sel2" name="perm" id="perm" class="custom-select">
+					<option value=""></option>
+					<?php
+						$permission = $conn->query("SELECT * from permission order by name asc");
+						while($row=$permission->fetch_assoc()):
+					?>
+					<option value="<?php echo $row['id'] ?>" <?php echo isset($perm) && $perm == $row['id'] ? "selected" :"" ?>><?php echo $row['name'] ?></option> 
+					<?php endwhile; ?>
 			</select>
 		</div>
 	</form>
@@ -177,16 +149,15 @@
 <script>
 	
 	$('#manage-rolepermission').submit(function(e){
-
 	 	e.preventDefault()
 	  	start_load();
 	 	$.ajax({
-	 		url:'ajax.php?action=save_permission',
+	 		url:'ajax.php?action=save_rolepermission',
 	 	    method: 'POST',
 	 	    data:$(this).serialize(),
 	 	   	success:function(resp){
 	 			if(resp==1){
-	 				alert_toast("Data successfully added",'success')
+	 				alert_toast("Role permission successfully added",'success')
 	 				setTimeout(function(){
 	 					location.reload();
 	 				},1000)
@@ -198,7 +169,6 @@
 	})
 
 	$('#add_permission_btn').click(function(){
-		
 		//$('.rolename-modal #mrole_name').val($('#role_select option:selected').text());
         $('.modal-md #mrole_id').val($('.role-info #id').val());
         $('#permission_modal').modal('show');
@@ -207,20 +177,32 @@
     $('.remove_permission').click(function(){
 	 	_conf("Are you sure to delete this permission?","remove_permission",[$(this).attr('data-id')])
 	})
-
-
 	
-</script>
+//</script>
 
-<script>
+//<script>
 	//$(document).ready(function(){
 	function _reset(){
 		$('[name="id"]').val('');
 		$('#manage-role').get(0).reset();
 	}
 
-	
+	function remove_permission($id){
+		start_load()
+		$.ajax({
+			url:'ajax.php?action=remove_rolepermission',
+			method:'POST',
+			data:{id:$id},
+			success:function(resp){
+				if(resp==1){
+					alert_toast("Data successfully deleted",'success')
+					setTimeout(function(){
+						location.reload()
+					},1500)
 
-	//})
+				}
+			}
+		})
+	}
 	
 </script>

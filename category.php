@@ -24,16 +24,14 @@
 						  <h5 class="card-title mb-0">Add Asset Category</h5>
 				  	</div>
 					<div class="card-body">
-							<input type="hidden" name="id">
+							<input type="hidden" name="id" id="id" value="<?php echo isset($id) ? $id : "" ?>" />
+							<input for="module" id="module" name="module" type="text" value="Category Module" hidden>
+
 							<div class="form-group">
 								<label class="control-label">Category</label>
 								<textarea name="name" id="" cols="30" rows="2" class="form-control"></textarea>
 							</div>
-							
-							
-							
 					</div>
-							
 					<div class="card-footer">
 						<div class="row">
 							<div class="col-md-12">
@@ -109,9 +107,29 @@
 		$('#manage-category').get(0).reset();
 	}
 	
-	$('#manage-category').submit(function(e){
+		$('#manage-category').submit(function(e){
 		e.preventDefault()
 		start_load()
+ 	  if (document.getElementById('id').value !== ""){
+		$.ajax({
+			url:'ajax.php?action=update_category',
+			data: new FormData($(this)[0]),
+		    cache: false,
+		    contentType: false,
+		    processData: false,
+		    method: 'POST',
+		    type: 'POST',
+ 			  success:function(resp){
+				if(resp==1){
+					alert_toast("Category data successfully updated",'success')
+					setTimeout(function(){
+						location.reload()
+					},1000)
+				}
+			}
+		})
+	}
+		else{
 		$.ajax({
 			url:'ajax.php?action=save_category',
 			data: new FormData($(this)[0]),
@@ -122,22 +140,16 @@
 		    type: 'POST',
 			success:function(resp){
 				if(resp==1){
-					alert_toast("Data successfully added",'success')
+					alert_toast("Category data successfully added",'success')
 					setTimeout(function(){
 						location.reload()
-					},1500)
-
-				}
-				else if(resp==2){
-					alert_toast("Data successfully updated",'success')
-					setTimeout(function(){
-						location.reload()
-					},1500)
-
+					},1000)
 				}
 			}
 		})
-	})
+  }
+})
+
 	$('.edit_category').click(function(){
 		start_load()
 		var cat = $('#manage-category')
@@ -146,19 +158,21 @@
 		cat.find("[name='name']").val($(this).attr('data-name'))
 		end_load()
 	})
+	
 	$('.delete_category').click(function(){
 		_conf("Are you sure to delete this category?","delete_category",[$(this).attr('data-id')])
 	})
+	
 	function displayImg(input,_this) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
         	$('#cimg').attr('src', e.target.result);
         }
-
         reader.readAsDataURL(input.files[0]);
     }
 }
+
 	function delete_category($id){
 		start_load()
 		$.ajax({
@@ -176,4 +190,5 @@
 			}
 		})
 	}
+
 </script>

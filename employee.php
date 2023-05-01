@@ -23,6 +23,9 @@
 						<button class="btn btn-primary btn-sm btn-block col-md-3 float-right" type="button" id="new_emp_btn"><span class="fa fa-plus"></span> Add Employee</button>
 					</div>
 					<div class="card-body">
+           <input type="hidden" name="id">
+           <input for="module" id="module" name="module" type="text" value="Employee Module" hidden >
+
 						<table id="table" class="table table-hover">
 							<thead>
 								<tr>
@@ -86,8 +89,6 @@
 		$(document).ready(function(){
 
 			
-
-			
 			$('.edit_employee').click(function(){
 				var $id=$(this).attr('data-id');
 				uni_modal("Edit Employee","manage_employee.php?id="+$id)
@@ -117,7 +118,6 @@
 							alert_toast("Employee's data successfully deleted","success");
 								setTimeout(function(){
 								location.reload();
-
 							},1000)
 						}
 					}

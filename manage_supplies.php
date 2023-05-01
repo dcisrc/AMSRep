@@ -20,7 +20,7 @@ if(isset($_GET['id'])){
 	
 	<form id='supply_frm'>
    	    <input type="hidden" name="id" id="id" value="<?php echo isset($id) ? $id : "" ?>" />
-		<input for="module" id="module" name="module" value="Manage Assets" hidden>
+		<input for="module" id="module" name="module" value="Manage Supplies" hidden>
 		<div class="clearfix"></div>
 		<div class = "row">
 			<div class="form-group col-md-4">
@@ -74,8 +74,48 @@ if(isset($_GET['id'])){
 //		document.getElementById('hiddenrows').hidden = false;
 //	};
     //
+    
 	$(document).ready(function(){
-		
+		$('#supply_frm').submit(function(e){
+		e.preventDefault()
+		start_load();
+		if (document.getElementById('id').value !== ""){
+			$.ajax({
+				url:'ajax.php?action=update_supplies',
+				method:"POST",
+				data:$(this).serialize(),
+				error:err=>console.log(),
+				success:function(resp){
+				if(resp == 1){
+					alert_toast("Supplies data successfully updated","success");
+					setTimeout(function(){
+					location.reload();
+						},1000)
+					}
+				}
+			})
+		}
+		else{
+			$.ajax({
+				url:'ajax.php?action=save_supplies',
+				method:"POST",
+				data:$(this).serialize(),
+				error:err=>console.log(),
+				success:function(resp){
+				if(resp == 1){
+					alert_toast("Supplies data successfully saved","success");
+					setTimeout(function(){
+					location.reload();
+						},1000)
+					}
+				}
+			})
+		}	
+	})
+})
+
+
+/*	$(document).ready(function(){
 		$('#supply_frm').submit(function(e){
 				e.preventDefault()
 				start_load();
@@ -96,4 +136,6 @@ if(isset($_GET['id'])){
 			})
 		})
 	})
+*/
+
 </script>

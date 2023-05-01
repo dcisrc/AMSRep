@@ -20,13 +20,16 @@
 			<!-- FORM Panel -->
 			<div class="col-md-4">
 			<form action="" id="manage-department">
+   	    <input type="hidden" name="id" id="id" value="<?php echo isset($id) ? $id : "" ?>" />
+    		<input for="module" id="module" name="module" value="Department" hidden>
+
 				<div class="card">
 					<div class="card-header">
 						 <h5 class="card-title mb-0">Add New Department </h5> 
 				  	</div>
 					<div class="card-body">
 							<input type="hidden" name="id">
-							<input for="module" id="module" name="module" type="text" value="Manage Department Module" hidden >
+							<input for="module" id="module" name="module" type="text" value="Department Module" hidden >
 							<div class="form-group">
 								<label class="control-label">Name</label>
 								<textarea name="name" id="" cols="30" rows="2" class="form-control"></textarea>
@@ -105,14 +108,36 @@
 	}
 </style>
 <script>
+
 	function _reset(){
+
 		$('[name="id"]').val('');
 		$('#manage-department').get(0).reset();
 	}
-	
+
 	$('#manage-department').submit(function(e){
 		e.preventDefault()
 		start_load()
+ 	  if (document.getElementById('id').value !== ""){
+		$.ajax({
+			url:'ajax.php?action=update_department',
+			data: new FormData($(this)[0]),
+		    cache: false,
+		    contentType: false,
+		    processData: false,
+		    method: 'POST',
+		    type: 'POST',
+ 			  success:function(resp){
+				if(resp==1){
+					alert_toast("Department data successfully updated",'success')
+					setTimeout(function(){
+						location.reload()
+					},1000)
+				}
+			}
+		})
+	}
+		else{
 		$.ajax({
 			url:'ajax.php?action=save_department',
 			data: new FormData($(this)[0]),
@@ -123,22 +148,16 @@
 		    type: 'POST',
 			success:function(resp){
 				if(resp==1){
-					alert_toast("Data successfully added",'success')
+					alert_toast("Department data successfully added",'success')
 					setTimeout(function(){
 						location.reload()
-					},1500)
-
-				}
-				else if(resp==2){
-					alert_toast("Data successfully updated",'success')
-					setTimeout(function(){
-						location.reload()
-					},1500)
-
+					},1000)
 				}
 			}
 		})
-	})
+  }
+})
+
 	$('.edit_department').click(function(){
 		start_load()
 		var cat = $('#manage-department')
@@ -147,6 +166,8 @@
 		cat.find("[name='name']").val($(this).attr('data-name'))
 		end_load()
 	})
+
+
 	$('.delete_department').click(function(){
 		_conf("Are you sure to delete this department?","delete_department",[$(this).attr('data-id')])
 	})
@@ -160,6 +181,7 @@
         reader.readAsDataURL(input.files[0]);
     }
 }
+
 	function delete_department($id){
 		start_load()
 		$.ajax({

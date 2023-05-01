@@ -32,6 +32,7 @@
 					<th class="d-none d-xl-table-cell">#</th>
 					<th>Name</th>
 					<th class="d-none d-xl-table-cell">Username</th>
+					<th>Role</th>
 					<th>Status</th>
 					<th>Action</th>
 				</tr>
@@ -39,7 +40,7 @@
 			<tbody>
 				<?php
  					include 'db_connect.php';
- 					$users = $conn->query("SELECT * FROM users WHERE status != 'DELETED' order by name asc");
+ 					$users = $conn->query("SELECT *, r.role_name as rolename FROM users u left join roles r on u.type = r.role_id WHERE status != 'DELETED' order by name asc");
  					$i = 1;
  					while($row= $users->fetch_assoc()):
 				 ?>
@@ -53,6 +54,9 @@
 				 	<td class="d-none d-xl-table-cell">
 				 		<?php echo $row['username'] ?>
 				 	</td>
+				 	<td>
+				 		<?php echo $row['rolename'] ?>
+				 	</td>	
 				 	<td><?php if($row['status']=="ACTIVE")           { echo '<span class="badge bg-success">';} 
 				 			  else                                   { echo '<span class="badge bg-danger">';} ?>
 				 		<?php echo $row['status'] ?>
@@ -75,6 +79,8 @@
 								    <div class="dropdown-divider"></div>
 								    <a class="dropdown-item unlock_user" href="javascript:void(0)" data-id = '<?php echo $row['id'] ?>'>Unlock</a>
 								    <?php } ?>
+								    <div class="dropdown-divider"></div>
+								    <a class="dropdown-item reset_pwd" href="javascript:void(0)" data-id = '<?php echo $row['id'] ?>'>Reset Password</a>
 								  </div>
 								</div>
 								</center>

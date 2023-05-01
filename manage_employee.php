@@ -10,10 +10,10 @@ if(isset($_GET['id'])){
 
 <div class="container-fluid">
 	<form id='employee_frm'>
-		<input for="module" id="module" name="module" type="text" value="Manage Employee Module" hidden >
+    	<input type="hidden" name="id" id="id" value="<?php echo isset($id) ? $id : "" ?>" />
+	    <input for="module" id="module" name="module" type="text" value="Manage Employee" hidden >
 		<div class="form-group">
 			<label>Firstname</label>
-			<input type="hidden" name="id" value="<?php echo isset($id) ? $id : "" ?>" />
 			<input type="text" name="firstname" required="required" class="form-control" value="<?php echo isset($firstname) ? $firstname : "" ?>" />
 		</div>
 		<div class="form-group">
@@ -40,6 +40,7 @@ if(isset($_GET['id'])){
 	</form>
 </div>
 <script>
+
 	$('[name="department_id"]').change(function(){
 		var did = $(this).val()
 		$('[name="position_id"] .opt').each(function(){
@@ -50,6 +51,7 @@ if(isset($_GET['id'])){
 			}
 		})
 	})
+
 	$(document).ready(function(){
 		$('.select2').select2({
 			placeholder:"Please Select Here",
@@ -58,7 +60,24 @@ if(isset($_GET['id'])){
 		$('#employee_frm').submit(function(e){
 				e.preventDefault()
 				start_load();
-			$.ajax({
+	      if (document.getElementById('id').value !== ""){
+	  			$.ajax({
+				url:'ajax.php?action=update_employee',
+				method:"POST",
+				data:$(this).serialize(),
+				error:err=>console.log(),
+				success:function(resp){
+						if(resp == 1){
+							alert_toast("Employee's data successfully updated","success");
+								setTimeout(function(){
+								location.reload();
+						},1000)
+					}
+				}
+			})
+		}
+		else{
+  			$.ajax({
 				url:'ajax.php?action=save_employee',
 				method:"POST",
 				data:$(this).serialize(),
@@ -68,11 +87,12 @@ if(isset($_GET['id'])){
 							alert_toast("Employee's data successfully saved","success");
 								setTimeout(function(){
 								location.reload();
-
-							},1000)
-						}
+						},1000)
+					}
 				}
 			})
-		})
-	})
+  		}
+  	})
+}) 		
+ 
 </script>
