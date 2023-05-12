@@ -13,7 +13,20 @@ include ('systemsettings.php');
 
   <link href="css/app.css" rel="stylesheet">
  
+<style>
+    @media (max-width: 1026px) {
+        .hidden-md {
+            display: none;
+        }
+    }
 
+  @media (min-width: 1025px) {
+        .hidden-lg{
+            display: none;
+        }
+    }
+  
+</style>
   
   <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet"> -->
 </head>
@@ -21,10 +34,10 @@ include ('systemsettings.php');
       <a class="sidebar-brand" style="height:40px;width:250px;padding-top: 0px;margin-top:0px" href="index.php">
         <h1 style='color:blue;font-weight: bold'><span class="align-middle"><?php echo $_SESSION['system_info']['company_short_name']?></span></h1>
       </a>
-      <a class="sidebar-toggle js-sidebar-toggle">
+      <a class="sidebar-toggle js-sidebar-toggle hidden-lg">
         <i class="hamburger align-self-center"></i>
       </a>
-      <div class="col-md-4 float-left" style="color:white!important">
+      <div class="col-md-4 float-left hidden-md" style="color:white!important">
         <large><b><h2 style="color:white;white-space:nowrap;"><?php echo $_SESSION['system_info']['system_name'] ?></h2></b></large>
       </div>
        
@@ -96,7 +109,7 @@ include ('systemsettings.php');
                 </div>
               </div>
             </li>
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown" data-bs-toggle="dropdown">
                 <div class="position-relative">
                   <i class="align-middle fa fa-comments text-white" ></i>
@@ -162,15 +175,18 @@ include ('systemsettings.php');
                   <a href="#" class="text-muted">Show all messages</a>
                 </div>
               </div>
-            </li>
+            </li> -->
             <li class="nav-item dropdown" id="userdrop">
               <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
                 <i class="align-middle" data-feather="settings"></i>
               </a>
 
               <a class="nav-link dropdown-toggle d-none d-sm-inline-block logged-user" href="#" data-bs-toggle="dropdown">
-                <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" /> <span class="text-white"><?php echo $_SESSION['login_name'] ?></span>
+                <img src="img/icons/person.jpg" class="avatar img-fluid rounded me-1" /><!-- <span class="text-white"><?php //echo $_SESSION['login_name'] ?></span> -->
+                 <span class="text-white"><?php echo $_SESSION['login_name'] ?></span>&nbsp;&nbsp;<span class="ml-6 font-italic hidden-md hidden-xs"><?php echo $_SESSION['login_role_name'] ?></span>
+                
               </a>
+
               <div class="dropdown-menu dropdown-menu-end user" id="user">
    
                 <a class="dropdown-item" href="#" id="changepwdbutton"></i> Change Password</a>

@@ -36,9 +36,6 @@ $assignnumber_tr = substr($assignnumber,0,20);
                        
           </div>  
           <div class="card-body">
-           <input type="hidden" name="id">
-           <input for="module" id="module" name="module" type="text" value="Edit Assignment Module" hidden >
-
           <br>
           <form>   
             <?php

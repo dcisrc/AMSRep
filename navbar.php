@@ -253,9 +253,9 @@ button.nav-item:hover, .nav-item.active {
         <div class="input-group ">
         <div>
         
-          <select class="form-select"  id="format" name="format" >
-            
-            <option value="PDF" >PDF</option> 
+          <select class="form-select"  id="format" name="format">
+            <option value="" disabled selected>Select report format.</option> 
+            <option value="PDF">PDF</option> 
             <option value="PDF" >Excel</option> 
          
           </select>
@@ -276,7 +276,7 @@ button.nav-item:hover, .nav-item.active {
         </div>
       </div>
       <br>
-      <input type="hidden" id="uri" />
+      <input id="uri" hidden />
         <table id="table" class="table1 table-hover">
               <thead>
                 <tr>
@@ -379,6 +379,7 @@ button.nav-item:hover, .nav-item.active {
             type: "GET",
             url: "search_employee.php?search_text="+$search_text+"&uri="+$uri,
             dataType: "html",
+            cache: "false",
             success: function(response) {
                 //alert(response);
             $('#empsrch').html(response);
@@ -395,28 +396,39 @@ button.nav-item:hover, .nav-item.active {
   });
 
    
-    $('#view_rpt').click(function(){
+  $('#view_rpt').click(function(){
  
-        $catid=$('#category option:selected').val();
-        $cutoff=$('#cut_off_date').val();
-        window.location="reports/rpcppe.php?catid="+$catid+'&cutoff='+$cutoff;
-    })
+      $catid=$('#category option:selected').val();
+      $cutoff=$('#cut_off_date').val();
+      window.location="reports/rpcppe.php?catid="+$catid+'&cutoff='+$cutoff;
+  })
 
-    $('#view_excel').click(function(){
+  $('#view_excel').click(function(){
 
  
-        $catid=$('#category option:selected').val();
-        $cutoff=$('#cut_off_date').val();
-        window.location="reports/rpcppe_excel.php?catid="+$catid+'&cutoff='+$cutoff;
+    $catid=$('#category option:selected').val();
+    $cutoff=$('#cut_off_date').val();
+    window.location="reports/rpcppe_excel.php?catid="+$catid+'&cutoff='+$cutoff;
         
        
        
-    });
+  });
 
   $('#sepc').click(function(){
-        $('#uri').val('employeeledgercardLS');
-        $('#selemployee_modal').modal('show');
-    })
+       
+        //$('#selemployee_modal').modal('show');
+        $('#selemployee_modal').modal('toggle');
+  })
+
+  $('#format').on('change',function(){
+    
+    if ($("#format :selected").text() == "PDF"){
+    $('#uri').val('employeeledgercardLS');
+    }
+    else{
+     $('#uri').val('employeeledgercard_excel2')  
+    }
+  })
 
   $('#rpcppe').click(function(){
         $('#selcategory_modal').modal('show');

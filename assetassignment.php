@@ -29,8 +29,6 @@
                   <button class="btn btn-primary btn-sm btn-block col-md-3 float-right" type="button" id="new_asset_assign"><span class="fa fa-plus"></span> New Asset Assignment</button>
                </div>
        <div class="card-body">
-           <input type="hidden" name="id">
-           <input for="module" id="module" name="module" type="text" value="Asset Assignment Module" hidden >
            <table id="table" class="table table-hover">
                 <thead>
                   <tr>

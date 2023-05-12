@@ -26,6 +26,7 @@
 						  Role Permission Maintenance</strong></h5>
 				  	</div>
 					<div class="card-body ">
+	
 							<div class="row">
 							<?php
 							if(isset($_GET['role_id'])){
@@ -112,8 +113,13 @@
 
 	<form action="" id='manage-rolepermission'>
 		<input type="hidden" for="mrole_id" name="mrole_id"  id="mrole_id">
-		<input for="module" id="module" name="module" type="text" value="Role Permission Module" hidden >					
+
+
+				
+		
 		<div class="form-group">Permissions</label>
+
+
 			<select class="custom-select browser-default sel2" name="perm" id="perm" class="custom-select">
 					<option value=""></option>
 					<?php
@@ -123,6 +129,7 @@
 					<option value="<?php echo $row['id'] ?>" <?php echo isset($perm) && $perm == $row['id'] ? "selected" :"" ?>><?php echo $row['name'] ?></option> 
 					<?php endwhile; ?>
 			</select>
+			
 		</div>
 	</form>
 	</div>
@@ -149,6 +156,7 @@
 <script>
 	
 	$('#manage-rolepermission').submit(function(e){
+
 	 	e.preventDefault()
 	  	start_load();
 	 	$.ajax({
@@ -157,7 +165,7 @@
 	 	    data:$(this).serialize(),
 	 	   	success:function(resp){
 	 			if(resp==1){
-	 				alert_toast("Role permission successfully added",'success')
+	 				alert_toast("Data successfully added",'success')
 	 				setTimeout(function(){
 	 					location.reload();
 	 				},1000)
@@ -169,6 +177,7 @@
 	})
 
 	$('#add_permission_btn').click(function(){
+		
 		//$('.rolename-modal #mrole_name').val($('#role_select option:selected').text());
         $('.modal-md #mrole_id').val($('.role-info #id').val());
         $('#permission_modal').modal('show');
@@ -177,15 +186,21 @@
     $('.remove_permission').click(function(){
 	 	_conf("Are you sure to delete this permission?","remove_permission",[$(this).attr('data-id')])
 	})
-	
-//</script>
 
-//<script>
+
+	
+</script>
+
+<script>
 	//$(document).ready(function(){
 	function _reset(){
 		$('[name="id"]').val('');
 		$('#manage-role').get(0).reset();
 	}
+
+	
+
+	//})
 
 	function remove_permission($id){
 		start_load()

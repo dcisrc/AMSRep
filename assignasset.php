@@ -54,9 +54,6 @@
                        
           </div>  
           <div class="card-body">
-             <input type="hidden" name="id">
-             <input for="module" id="module" name="module" type="text" value="Assign Asset Module" hidden >
-        
           <br>
           <form>   
           <div class="row">

@@ -1,4 +1,16 @@
-<?php include('db_connect.php');?>
+<?php 
+  require_once('startsession.php');
+  if(!isset($_SESSION['login_id']))
+    header('location:login.php');
+  include('db_connect.php');
+
+  include('header.php');
+  include ('topbar.php'); 
+  include ('navbar.php'); 
+  include ('utils.php');
+?>
+
+<main id="view-panel" >
 
 <div class="container-fluid">
 	
@@ -6,21 +18,18 @@
 		<div class="row">
 			<!-- FORM Panel -->
 			<div class="col-md-4">
-			<form action="" id="manage-assetitems">
-				<div class="card">
+			<form action="" id="manage-location">
+				<div class="card flex-fill">
 					<div class="card-header">
-						  Asset Items
+						  <h5 class="card-title mb-0">Add New Location</h5>
 				  	</div>
 					<div class="card-body">
 							<input type="hidden" name="id">
 							<div class="form-group">
-								<label class="control-label">Asset Item</label>
-								<textarea name="name" id="" cols="30" rows="1" class="form-control"></textarea>
+								<label class="control-label">Location</label>
+								<textarea name="name" id="" cols="30" rows="2" class="form-control"></textarea>
 							</div>
-							<div class="form-group">
-								<label class="control-label">PN Suffix</label>
-								<textarea name="pnsuffix" id="" cols="30" rows="1" class="form-control"></textarea>
-							</div>
+							
 							
 							
 					</div>
@@ -40,22 +49,21 @@
 
 			<!-- Table Panel -->
 			<div class="col-md-8">
-				<div class="card">
+				<div class="card flex-fill">
 					<div class="card-body">
-						<table class="table table-bordered table-hover">
+						<table class="table table-hover">
 							<thead>
 								<tr>
 									<th class="text-center">#</th>
-									<th class="text-center">Asset Item</th>
-									<th class="text-center">PN Suffix</th>
+									<th class="text-center">Location</th>
 									<th class="text-center">Action</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php 
 								$i = 1;
-								$assetitem = $conn->query("SELECT * FROM assetitem order by id asc");
-								while($row=$assetitem->fetch_assoc()):
+								$category = $conn->query("SELECT * FROM location order by id asc");
+								while($row=$category->fetch_assoc()):
 								?>
 								<tr>
 									<td class="text-center"><?php echo $i++ ?></td>
@@ -63,12 +71,9 @@
 									<td class="">
 										 <p> <b><?php echo $row['name'] ?></b></p>
 									</td>
-									<td class="">
-										 <p> <b><?php echo $row['pnsuffix'] ?></b></p>
-									</td>
 									<td class="text-center">
-										<button class="btn btn-sm btn-primary edit_category" type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['name'] ?>"  >Edit</button>
-										<button class="btn btn-sm btn-danger delete_category" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
+										<button class="btn btn-sm btn-primary edit_location" type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['name'] ?>"  >Edit</button>
+										<button class="btn btn-sm btn-danger delete_location" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
 									</td>
 								</tr>
 								<?php endwhile; ?>
@@ -83,7 +88,7 @@
 
 </div>
 
-<?php include('db_connect.php');?>
+</main>
 
 <style>
 	
@@ -101,14 +106,15 @@
 <script>
 	function _reset(){
 		$('[name="id"]').val('');
-		$('#manage-assetitems').get(0).reset();
+		$('#manage-location').get(0).reset();
 	}
 	
-	$('#manage-assetitems').submit(function(e){
+	$('#manage-location').submit(function(e){
 		e.preventDefault()
 		start_load()
+		if (document.getElementById('id').value !== ""){
 		$.ajax({
-			url:'ajax.php?action=save_assetitem',
+			url:'ajax.php?action=update_location',
 			data: new FormData($(this)[0]),
 		    cache: false,
 		    contentType: false,
@@ -123,27 +129,52 @@
 					},1500)
 
 				}
-				else if(resp==2){
-					alert_toast("Data successfully updated",'success')
+			
+
+				
+			}
+		})
+
+		}
+		else{
+		$.ajax({
+			url:'ajax.php?action=save_location',
+			data: new FormData($(this)[0]),
+		    cache: false,
+		    contentType: false,
+		    processData: false,
+		    method: 'POST',
+		    type: 'POST',
+			success:function(resp){
+				if(resp==1){
+					alert_toast("Data successfully added",'success')
 					setTimeout(function(){
 						location.reload()
 					},1500)
 
 				}
+			
+
+				
 			}
 		})
+	  }
 	})
-	$('.edit_assetitem').click(function(){
+	$('.edit_location').click(function(){
 		start_load()
-		var cat = $('#manage-assetitems')
+		var cat = $('#manage-location')
 		cat.get(0).reset()
 		cat.find("[name='id']").val($(this).attr('data-id'))
 		cat.find("[name='name']").val($(this).attr('data-name'))
 		end_load()
 	})
-	$('.delete_assetitem').click(function(){
-		_conf("Are you sure to delete this Asset Item?","delete_assetitem",[$(this).attr('data-id')])
+
+
+	$('.delete_location').click(function(){
+		_conf("Are you sure to delete this location?","delete_location",[$(this).attr('data-id')])
 	})
+
+
 	function displayImg(input,_this) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -154,10 +185,10 @@
         reader.readAsDataURL(input.files[0]);
     }
 }
-	function delete_assetitem($id){
+	function delete_location($id){
 		start_load()
 		$.ajax({
-			url:'ajax.php?action=delete_assetitem',
+			url:'ajax.php?action=delete_location',
 			method:'POST',
 			data:{id:$id},
 			success:function(resp){

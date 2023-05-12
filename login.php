@@ -97,14 +97,17 @@ div#login-right::before {
   		</div>
 
   		<div id="login-right" >
-			<div class="row fixed-top mt-5 center-top" ><h1>Asset Management System</h1></div>
+			<div class="row fixed-top mt-5 center-top" ><h3>Asset Inventory Management System</h3></div> 
+			
   			<div class="card col-md-8">
 
   				<div class="card-body">
   						
   					<form id="login-form" >
+
   						<div class="mb-3">
-  							<input for="module" id="module" name="module" type="text" value="Login Module" hidden >
+  							<input for="module" id="module" name="module" type="text" value="Login module" hidden >
+  							<br>
   							
   							<label for="username" class="control-label">Username</label>
   							<input type="text" id="username" name="username" maxlength=20 class="form-control">
@@ -142,6 +145,7 @@ div#login-right::before {
 
 			},
 			success:function(resp){
+				console.log(resp);
 				if(resp == 1){
 					
 					location.href ='home.php';
@@ -149,7 +153,7 @@ div#login-right::before {
 					location.href ='voting.php';
 				
 				}else{
-										
+						
 					$('#login-form').prepend('<div class="alert alert-danger">Username or password is incorrect.</div>');
 					$('#login-form button[type="button"]').removeAttr('disabled').html('Login');
 					

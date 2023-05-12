@@ -43,9 +43,6 @@
           </div>
          
           <div class="card-body">
-            <input type="hidden" name="id">
-            <input for="module" id="module" name="module" type="text" value="Asset Transfer Module" hidden >
-
             <table id="table" class="table table-hover ">
                 <thead>
                    <th>PTR No.</th>

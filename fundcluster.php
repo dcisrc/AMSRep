@@ -27,7 +27,7 @@
 				  	</div>
 					<div class="card-body">
 						<input type="hidden" name="id">
-            <input for="module" id="module" name="module" type="text" value="Fund Transfer Module" hidden >
+            
         	<div class="form-group">
 								<label class="control-label">Func Cluster</label>
 								<textarea name="name" id="" cols="30" rows="2" class="form-control"></textarea>

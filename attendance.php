@@ -10,9 +10,6 @@
 						<button class="btn btn-primary btn-sm btn-block col-md-3 float-right" type="button" id="new_attendance_btn"><span class="fa fa-plus"></span> Add Attendance</button>
 					</div>
 					<div class="card-body">
-           <input type="hidden" name="id">
-           <input for="module" id="module" name="module" type="text" value="Attendance Module" hidden >
-
 						<table id="table" class="table table-bordered table-striped">
 							<colgroup>
 								<col width="10%">
