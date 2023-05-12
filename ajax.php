@@ -64,6 +64,9 @@ if($action == 'update_user'){
 
 if($action == 'delete_user'){
 	$save = $crud->delete_user();
+	$_SESSION['user_action'] = "Deleted User";
+	$_SESSION['modulename'] = "Manage User Module";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;
 }
@@ -80,7 +83,7 @@ if($action == 'save_role'){
 if($action == 'update_role'){
 	$save = $crud->save_role();
 	if($save)
-		$_SESSION['user_action'] = "Update Role";
+		$_SESSION['user_action'] = "Updated Role";
 		$save = $crud->save_logs();
 		if($save)
 		echo $save;
@@ -88,6 +91,9 @@ if($action == 'update_role'){
 
 if($action == 'delete_role'){
 	$save = $crud->delete_role();
+	$_SESSION['user_action'] = "Deleted Role";
+	$_SESSION['modulename'] = "Manage Role Module";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;
 }
@@ -131,7 +137,7 @@ if($action == "save_employee"){
 if($action == "update_employee"){
 	$save = $crud->save_employee();
 	if($save)
-		$_SESSION['user_action'] = "Update Employee";
+		$_SESSION['user_action'] = "Updated Employee";
 		$save = $crud->save_logs();
 		if($save)
 		echo $save;
@@ -139,6 +145,9 @@ if($action == "update_employee"){
 
 if($action == "delete_employee"){
 	$save = $crud->delete_employee();
+	$_SESSION['user_action'] = "Deleted Employee";
+	$_SESSION['modulename'] = "Manage Employee Module";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;
 }
@@ -163,11 +172,12 @@ if($action == "update_asset"){
 
 if($action == "delete_asset"){
 	$save = $crud->delete_asset();
-	if($save)
+	//if($save)
 		$_SESSION['user_action'] = "Deleted Asset";
-		$savelogs = $crud->save_logs();
-		if($savelogs)
-		echo $save;
+	    $_SESSION['modulename'] = "Manage Assets";
+	    $save = $crud->save_logs();
+        if($save)
+		   echo $save;
 }
 
 if($action == "search_asset"){
@@ -196,6 +206,9 @@ if($action == "update_assetitem"){
 
 if($action == "delete_assetitem"){
 	$save = $crud->delete_assetitem();
+	$_SESSION['user_action'] = "Deleted Asset Item";
+	$_SESSION['modulename'] = "Manage Assets Items";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;
 }	
@@ -220,6 +233,9 @@ if($action == 'update_supplies'){
 
 if($action == "delete_supplies"){
 	$save = $crud->delete_supplies();
+	$_SESSION['user_action'] = "Deleted Supplies";
+	$_SESSION['modulename'] = "Manage Supplies Module";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;	
 }
@@ -271,6 +287,9 @@ if($action == "update_inventory"){
 
 if($action == "delete_inventory"){
 	$save = $crud->delete_inventory();
+	$_SESSION['user_action'] = "Deleted Inventory";
+	$_SESSION['modulename'] = "Manage Inventory Module";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;	
 }
@@ -319,6 +338,9 @@ if($action == "update_office"){
 
 if($action == "delete_office"){
 	$save = $crud->delete_office();
+	$_SESSION['user_action'] = "Deleted Office";
+	$_SESSION['modulename'] = "Manage Office Module";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;
 }	
@@ -343,6 +365,9 @@ if($action == "update_department"){
 
 if($action == "delete_department"){
 	$save = $crud->delete_department();
+	$_SESSION['user_action'] = "Deleted Department";
+	$_SESSION['modulename'] = "Manage Department";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;
 }	
@@ -367,6 +392,9 @@ if($action == "update_category"){
 
 if($action == "delete_category"){
 	$save = $crud->delete_category();
+	$_SESSION['user_action'] = "Delete Category";
+	$_SESSION['modulename'] = "Category Module";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;
 }	
@@ -391,6 +419,9 @@ if($action == "update_fundcluster"){
 
 if($action == "delete_fundcluster"){
 	$save = $crud->delete_fundcluster();
+	$_SESSION['user_action'] = "Deleted Fund Cluster";
+	$_SESSION['modulename'] = "Manage Fund Cluster Module";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;
 }	
@@ -415,6 +446,9 @@ if($action == "update_location"){
 
 if($action == "delete_location"){
 	$save = $crud->delete_location();
+	$_SESSION['user_action'] = "Deleted Location";
+	$_SESSION['modulename'] = "Manage Location Module";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;	
 }
@@ -439,6 +473,9 @@ if($action == "update_position"){
 
 if($action == "delete_position"){
 	$save = $crud->delete_position();
+	$_SESSION['user_action'] = "Deleted Position";
+	$_SESSION['modulename'] = "Manage Position Module";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;
 }
@@ -463,6 +500,9 @@ if($action == "update_notification"){
 
 if($action == "delete_notification"){
 	$save = $crud->delete_notification();
+	$_SESSION['user_action'] = "Deleted Notification";
+	$_SESSION['modulename'] = "Manage Notification Module";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;
 }
@@ -470,7 +510,7 @@ if($action == "delete_notification"){
 if($action == "save_permission"){
 	$save = $crud->save_permission();
 	if($save)
-		$_SESSION['user_action'] = "Saved Permission";
+		$_SESSION['user_action'] = "Added Permission";
 		$save = $crud->save_logs();
 		if($save)
   		   echo $save;
@@ -479,7 +519,7 @@ if($action == "save_permission"){
 if($action == "update_permission"){
 	$save = $crud->save_permission();
 	if($save)
-		$_SESSION['user_action'] = "Update Permission";
+		$_SESSION['user_action'] = "Updated Permission";
 		$save = $crud->save_logs();
 		if($save)
   		   echo $save;
@@ -487,6 +527,9 @@ if($action == "update_permission"){
 
 if($action == "delete_permission"){
 	$save = $crud->delete_permission();
+	$_SESSION['user_action'] = "Deleted Permission";
+	$_SESSION['modulename'] = "Manage Permission Module";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;
 }
@@ -511,6 +554,9 @@ if($action == "update_unassigned_assets"){
 
 if($action == "remove_asset_assignment"){
 	$save = $crud->remove_asset_assignment();
+	$_SESSION['user_action'] = "Deleted Asset Assignment";
+	$_SESSION['modulename'] = "Manage Asset Assignment Module";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;
 }
@@ -562,6 +608,9 @@ if($action == "update_rolepermission"){
 
 if($action == "remove_rolepermission"){
 	$save = $crud->remove_rolepermission();
+	$_SESSION['user_action'] = "Removed Role Permission";
+	$_SESSION['modulename'] = "Manage Roles Module";
+	$save = $crud->save_logs();
 	if($save)
 		echo $save;
 }
