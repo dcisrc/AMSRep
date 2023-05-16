@@ -99,7 +99,7 @@ button.nav-item:hover, .nav-item.active {
 
     } ?>
   <?php
-    if (checkPermissions($_SESSION['login_id'],18)=='true'){
+    if (checkPermissions($_SESSION['login_id'],19)=='true'){
       echo '<li class="nav-item">
             <a class="nav-link nav-item" href="assettransfers.php"><span class="icon-field"><i class="fa fa-luggage-cart"></i></span> Asset Transfer/Return </a>
             </li>';
