@@ -98,6 +98,14 @@ button.nav-item:hover, .nav-item.active {
             </li>';
 
     } ?>
+
+  <?php
+    if (checkPermissions($_SESSION['login_id'],8)=='true'){
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="supplier.php"><span class="icon-field"><i class="fa fa-keyboard"></i></span> Supplier </a>
+            </li>';
+    } ?> 
+
   <?php
     if (checkPermissions($_SESSION['login_id'],19)=='true'){
       echo '<li class="nav-item">
@@ -119,7 +127,7 @@ button.nav-item:hover, .nav-item.active {
   <?php
     if (checkPermissions($_SESSION['login_id'],15)=='true'){
       echo '<li class="nav-item">
-            <a class="nav-link nav-item" href="suppliesissuance.php"><span class="icon-field"><i class="fa fa-keyboard"></i></span> Supplies Issuance </a>
+supplier            <a class="nav-link nav-item" href="suppliesissuance.php"><span class="icon-field"><i class="fa fa-keyboard"></i></span> Supplies Issuance </a>
             </li>';
      } ?>         
   <?php
@@ -175,7 +183,13 @@ button.nav-item:hover, .nav-item.active {
   <?php
     if (checkPermissions($_SESSION['login_id'],20)=='true'){
       echo '<li><a class="nav-link nav-item sepc" id="sepc" href="#">Employee Ledger Card</a></li>';
+  }?>  
+
+  <?php
+    if (checkPermissions($_SESSION['login_id'],20)=='true'){
+     echo '<li><a class="nav-link nav-item" id="icfrep" href="#"> Inventory Count Form </a></li>';
   }?>     
+
   <?php
     if (checkPermissions($_SESSION['login_id'],21)=='true'){
       echo '<li><a class="nav_link nav-item" id="rpcppe" href="#">Physical Count of PPE</a></li>';
@@ -433,6 +447,11 @@ button.nav-item:hover, .nav-item.active {
   $('#rpcppe').click(function(){
         $('#selcategory_modal').modal('show');
     })
+
+  $('#icfrep').click(function(){
+     uni_modal("Inventory Count Form","selectdepartment.php");
+    })
+
   $('#iirup1').click(function(){
         $('#uri').val('iirup');
         $('#selemployee_modal').modal('show');

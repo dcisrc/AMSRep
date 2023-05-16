@@ -345,6 +345,36 @@ if($action == "delete_office"){
 		echo $save;
 }	
 
+if($action == "save_supplier"){
+	$save = $crud->save_supplier();
+	if($save)
+		$_SESSION['user_action'] = "Saved Supplier";
+		$savelogs = $crud->save_logs();
+		if($savelogs)
+		echo $save;
+}
+
+if($action == "update_supplier"){
+	$save = $crud->save_supplier();
+	if($save)
+		$_SESSION['user_action'] = "Update Supplier";
+		$savelogs = $crud->save_logs();
+		if($savelogs)
+		echo $save;
+}
+
+if($action == "delete_supplier"){
+	$save = $crud->delete_supplier();
+	$_SESSION['user_action'] = "Deleted Supplier";
+	$_SESSION['modulename'] = "Manage Supplier";
+	$save = $crud->save_logs();
+	if($save)
+		echo $save;
+}	
+
+
+
+
 if($action == "save_department"){
 	$save = $crud->save_department();
 	if($save)

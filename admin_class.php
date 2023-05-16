@@ -539,6 +539,22 @@ Class Action {
 			return 1;
 	}
 
+
+	function save_supplier(){
+		extract($_POST);
+		$data =" name='$name' ";
+		$data .=", address='$address' ";
+		$data .=", contact_number='$contact_number' ";
+		$data .=", contact_name='$contact_name' ";
+		if(empty($id)){
+			$save = $this->db->query("INSERT INTO supplier set ".$data);
+		}else{
+			$save = $this->db->query("UPDATE supplier set ".$data." where id=".$id);
+		}
+		if($save)
+			return 1;
+	}
+
 	function save_department(){
 		extract($_POST);
 		$data =" name='$name' ";
@@ -550,6 +566,15 @@ Class Action {
 		if($save)
 			return 1;
 	}
+
+	function delete_supplier(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM supplier where id = ".$id);
+		if($delete)
+			return 1;
+	}
+
+
 
 	function delete_department(){
 		extract($_POST);
