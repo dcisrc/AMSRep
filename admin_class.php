@@ -335,6 +335,8 @@ Class Action {
 		$data .=", totaldepreciation='$totaldepreciation'";
 		$data .=", netbookvalue = '$netbookvalue'";
 		$data .=", `condition` = '$condition'";
+		$data .=", warranty = '$warranty'";
+		$data .=", insurable = '$insurable'";
 		if(empty($id)){
 			$data .=", status = 'Unassigned'";
 			$save = $this->db->query("INSERT INTO assets set ".$data);
@@ -479,6 +481,22 @@ Class Action {
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM category where id = ".$id);
 		if($delete)
+			return 1;
+	}
+
+	function save_classification(){
+		extract($_POST);
+		$data =" prefixcode='$prefixcode' ";
+		$data .=", shortdescription='$shortdescription'  ";
+		$data .=", majoracctgrp='$majoracctgrp'  ";
+		$data .=", sbmajoracctgrp='$sbmajoracctgrp' ";
+		
+		if(empty($id)){
+			$save = $this->db->query("INSERT INTO classification set ".$data);
+		}else{
+			$save = $this->db->query("UPDATE classification set ".$data." where id=".$id);
+		}
+		if($save)
 			return 1;
 	}
 

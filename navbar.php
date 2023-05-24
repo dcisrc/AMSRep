@@ -100,9 +100,9 @@ button.nav-item:hover, .nav-item.active {
     } ?>
 
   <?php
-    if (checkPermissions($_SESSION['login_id'],8)=='true'){
+    if (checkPermissions($_SESSION['login_id'],30)=='true'){
       echo '<li class="nav-item">
-            <a class="nav-link nav-item" href="supplier.php"><span class="icon-field"><i class="fa fa-keyboard"></i></span> Supplier </a>
+            <a class="nav-link nav-item" href="supplier.php"><span class="icon-field"><i class="fa fa-store"></i></span> Supplier </a>
             </li>';
     } ?> 
 
@@ -148,7 +148,16 @@ supplier            <a class="nav-link nav-item" href="suppliesissuance.php"><sp
             <a class="nav-link nav-item" href="office.php"><span class="icon-field"><i class="fa fa-building"></i></span> Offices</a>
             </li>';
     } ?>
+  
+
   <?php
+    if (checkPermissions($_SESSION['login_id'],31)=='true'){
+      echo '<li class="nav-item">
+            <a class="nav-link nav-item" href="accountclassification1.php
+            "><span class="icon-field"><i class="fa fa-user-circle"></i></span> Asset Classification</a>
+            </li>';
+    } ?>
+    <?php
     if (checkPermissions($_SESSION['login_id'],8)=='true'){
       echo '<li class="nav-item">
             <a class="nav-link nav-item" href="location.php"><span class="icon-field"><i class="fa fa-map-marker"></i></span> Locations </a>
