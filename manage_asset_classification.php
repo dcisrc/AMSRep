@@ -10,6 +10,7 @@ if(isset($_GET['id'])){
 
 <div class="container-fluid">
 	<form id='asset_classification_frm'>
+		<input type="hidden" name="id" id="id" value="<?php echo isset($id) ? $id : "" ?>" />
 		<input for="module" id="module" name="module" type="text" value="Manage Asset Classification Module" hidden >
 		<div class="form-group">
 			<label>Short Description</label>
@@ -38,7 +39,7 @@ if(isset($_GET['id'])){
 		<div class="form-group">
 			<label>Sub-Major Account Group</label>
 			<select class="custom-select browser-default select2" name="sbmajoracctgrp">
-				<!-- <option value=""></option> -->
+			classification	<!-- <option value=""></option> -->
 					<?php 
 						$sbmajoracctqry = $conn->query("SELECT * from sbmajoracctgrp order by name asc");
 						while($row=$sbmajoracctqry->fetch_assoc()):

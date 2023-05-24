@@ -588,6 +588,37 @@ if($action == "update_prevassigned_assets"){
 		echo $save;
 }
 
+if($action == "save_classification"){
+	$save = $crud->save_classification();
+	if($save)
+		$_SESSION['user_action'] = "Saved Classification";
+		$save = $crud->save_logs();
+		if($save)
+		echo $save;
+}
+
+if($action == "update_classification"){
+	$save = $crud->save_classification();
+	if($save)
+		$_SESSION['user_action'] = "Update Classification";
+		$save = $crud->save_logs();
+		if($save)
+		echo $save;
+}
+
+if($action == "delete_classification"){
+	$save = $crud->delete_classification();
+	if($save)
+		$_SESSION['user_action'] = "Delete Classification";
+		$_SESSION['modulename'] = "Asset Claasification";
+		$save = $crud->save_logs();
+		if($save)
+		echo $save;
+}
+
+
+
+
 if($action == "save_rolepermission"){
 	$save = $crud->save_rolepermission();
 	if($save)

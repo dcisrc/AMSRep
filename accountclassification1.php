@@ -41,11 +41,6 @@
 							<tbody>
 
 								<?php
-
-								
-
-
-
 									$d_arr[0] = "Unset";
 									$p_arr[0] = "Unset";
 									$dept = $conn->query("SELECT * from department order by name asc");
@@ -114,15 +109,16 @@
 				_conf("Are you sure to delete this asset_classification?","remove_asset_classification",[$(this).attr('data-id')])
 			})
 		});
-		function remove_employee(id){
+		function remove_asset_classification(id){
 			start_load()
 			$.ajax({
 				url:'ajax.php?action=delete_classification',
-				method:"POST",
-				data:{id:id},
-				error:err=>console.log(err),
-				success:function(resp){
-						if(resp == 1){
+        method:"POST",
+        data:{id:id},
+//        data:{id:id, module:mod},
+        error:err=>console.log(err),
+        success:function(resp){
+            if(resp == 1){
 							alert_toast("Asset Classification successfully deleted","success");
 								setTimeout(function(){
 								location.reload();

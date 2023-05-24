@@ -500,6 +500,13 @@ Class Action {
 			return 1;
 	}
 
+	function delete_classification(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM classification where id = ".$id);
+		if($delete)
+			return 1;
+	}
+
 	function save_fundcluster(){
 		extract($_POST);
 		$data =" name='$name' ";
