@@ -12,52 +12,50 @@ include 'db_connect.php';
 		width: 320px;
 	}
 	.cust-label{
-       font-size: 14px;     
+       font-size: 14px;   
+
+
 	}
+    .tab-content {display: none;}
+	.tab-content.active {display:block;} 
 </style>
+
+
 <div class="container-fluid">
-	
-	
-	<form id='asset_frm'>
-		<input type="hidden" name="id" id="id" value="<?php echo isset($id) ? $id : "" ?>" />
-		<input for="module" id="module" name="module" value="Manage Assets" hidden>
-		<div class="clearfix"></div>
+<form id='asset_frm'>	
+	<input type="hidden" name="id" id="id" value="<?php echo isset($id) ? $id : "" ?>" />
+	<input for="module" id="module" name="module" value="Manage Assets" hidden>
+
+	<ul class="nav nav-tabs">
+    
+    	<li><a data-toggle="tab" href="#info1" id="defshow" class="nav-link">Asset Information</a></li>
+    	<li><a data-toggle="tab" href="#info2" class="nav-link">Other Information</a></li>
+    
+	</ul>
+
+ 	<div class="tab-content active  ">
+ 	<br>	
+    
+    	<div id="info1" class="tab-pane fade active">
+
+
+
 		<div class = "row">
+
+			<div class="form-group col-md-4">
+				<label>Property Number</label>
+				<input type="text" id="property_number" name="property_number" required="required" class="form-control"  />'
+            </div>
 			
 			<div class="form-group col-md-4">
 				<label>Asset Code</label>
-				<?php
-                    //get last asset code number used
-					$qry = $conn->query("SELECT asset_code FROM assets ORDER BY asset_code desc LIMIT 1");
-					if ($qry->num_rows > 0){
-						while($row=$qry->fetch_array()){
-						//format new asset code	
-						$lastnum=str_pad(substr($row['asset_code'],2,5)+1,5,'0',STR_PAD_LEFT);
-
-						}
-					}
-					else
-						{$lastnum=str_pad(1,5,'0',STR_PAD_LEFT);}
-                    //handle asset code vis-a-vis new entry and edit
-					if (isset($asset_code))
-    					{$newac=$asset_code;}
-    				else
-    					{
-						$newac=substr(date('Y'),-2).$lastnum;
-						}
-	       
-
-					echo '<input type="text" id="asset_code" name="asset_code" required="required" class="form-control" required pattern="(0-9) {6,}" value="'.$newac . '"  />'
-				?>		
+				<input type="text" id="asset_code" name="asset_code" required="required" class="form-control"   />
+						
 
 
-		    <!--<input type="text" id="asset_code" name="asset_code" required="required" class="form-control" value="<?php //echo isset($asset_code) ? $asset_code : "" ?>" required pattern="(0-9) {6,}" />';-->
+		    		<!--<input type="text" id="asset_code" name="asset_code" required="required" class="form-control" value="<?php //echo isset($asset_code) ? $asset_code : "" ?>" required pattern="(0-9) {6,}" />';-->
 			</div>
-			<div class="form-group col-md-8">
-				<label>Asset Name</label>
-				<input type="text" name="asset_name" required="required" class="form-control" value="<?php echo isset($asset_name) ? $asset_name : "" ?>" />
-			</div>
-
+			
 			<!-- <div class="form-group col-md-4">
   				
   				<label class="form-check-label">Main Unit</label>
@@ -69,6 +67,13 @@ include 'db_connect.php';
 			</div> -->
 		
 		</div>
+		<div class="row">
+			<div class="form-group col-md-12">
+				<label>Asset Name</label>
+				<input type="text" name="asset_name" required="required" class="form-control" value="<?php echo isset($asset_name) ? $asset_name : "" ?>" />
+			</div>
+
+		</div>	
         <hr>
 		<div class="clearfix"></div>
 		
@@ -114,9 +119,54 @@ include 'db_connect.php';
 				</select>
 			</div>
 
+			<div class="clearfix"></div>
+
+		<div class="row">
+			<div class="form-group col-md-4">
+				<label>Purchase Amount</label>
+			
+				<input type="number" name="purchase_amount" required="required" class="form-control text-right" value="<?php echo isset($purchase_amount) ? $purchase_amount : "" ?>" />
+			
+			</div>
+			<div class="form-group col-md-4">
+				<label>Purchase Date</label>
+				<input type="text" name="purchase_date" required="required" class="form-control text-right" onfocus="(this.type='date')" step="any" value="<?php echo isset($purchase_date) ? $purchase_date : "" ?>" />
+			</div>
+			<div class="form-group col-md-4">
+				<label>Supplier</label>
+				<input type="text" name="supplier" required="required" class="form-control" value="<?php echo isset($supplier) ? $supplier : "" ?>" />
+			</div>
 		</div>
 
-		<div class="clearfix"></div>
+		</div>
+
+		<div class="row">
+			<div class="form-group col-md-4">
+				<label>Warranty</label>
+				<input type="text" name="warranty" placeholder="yrs." class="form-control" value="<?php echo isset($warranty) ? $warranty : "" ?>" />
+			</div>
+			<div class="form-group col-md-4">
+				<label>Insurable</label>
+				<select class="custom-select browser-default " name="insurable">
+					<option value="">NO</option>
+					<option value="N">NO</option>
+					<option value="Y">YES</option>
+					
+					
+				</select>
+			</div>
+			
+			
+		</div>	
+      
+    	</div>
+
+    	<div id="info2" class="tab-pane fade">
+
+
+
+
+    		<div class="clearfix"></div>
 
 			
 
@@ -155,24 +205,7 @@ include 'db_connect.php';
 			</div>
 		</div>
 
-		<div class="clearfix"></div>
-
-		<div class="row">
-			<div class="form-group col-md-4">
-				<label>Purchase Amount</label>
-			
-				<input type="number" name="purchase_amount" required="required" class="form-control text-right" value="<?php echo isset($purchase_amount) ? $purchase_amount : "" ?>" />
-			
-			</div>
-			<div class="form-group col-md-4">
-				<label>Purchase Date</label>
-				<input type="text" name="purchase_date" required="required" class="form-control text-right" onfocus="(this.type='date')" step="any" value="<?php echo isset($purchase_date) ? $purchase_date : "" ?>" />
-			</div>
-			<div class="form-group col-md-4">
-				<label>Supplier</label>
-				<input type="text" name="supplier" required="required" class="form-control" value="<?php echo isset($supplier) ? $supplier : "" ?>" />
-			</div>
-		</div>
+		
 		<hr>
 		<div class="clearfix"></div>
 		<div class="row">
@@ -217,7 +250,8 @@ include 'db_connect.php';
 			</div>
 			
 		</div>	
-		<div id="hiddenrows" class="row" hidden>
+
+<div id="hiddenrows" class="row" hidden>
 			<div class="form-group col-md-3">
 				<label>Total Depreciation</label>
 				<input type="text" name="totaldepreciation" required="required" class="form-control" value="<?php echo isset($totaldepreciation) ? $totaldepreciation : "" ?>" />
@@ -253,6 +287,25 @@ include 'db_connect.php';
 			</div>
 			
 		</div>	
+
+
+
+
+
+      
+    	</div>
+    
+  	</div>
+</div>
+	
+	
+		
+		
+		
+
+		
+		
+		
 	</form>
    </div>
 </div>
@@ -307,4 +360,10 @@ include 'db_connect.php';
 				}	
 		})
 	})
+
+
+
+</script>
+<script>
+ 	document.getElementById("defshow").click();
 </script>
